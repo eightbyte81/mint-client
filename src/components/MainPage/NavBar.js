@@ -38,7 +38,7 @@ export const NavBar = () => {
                         <ul className="flex items-center hidden space-x-8 lg:flex">
                             <li>
                                 <a
-                                    href="/"
+                                    href="/activities"
                                     aria-label="Задачи"
                                     title="Задачи"
                                     className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
@@ -48,7 +48,7 @@ export const NavBar = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/"
+                                    href="/analytics"
                                     aria-label="Аналитика"
                                     title="Аналитика"
                                     className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
@@ -58,7 +58,7 @@ export const NavBar = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/"
+                                    href="/profile"
                                     aria-label="Профиль"
                                     title="Профиль"
                                     className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
