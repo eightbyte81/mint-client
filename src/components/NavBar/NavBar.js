@@ -72,24 +72,24 @@ export const NavBar = () => {
                 </div>
                 <ul className="flex items-center hidden space-x-8 lg:flex">
                     <li>
-                        <a
-                            href="/Projects/coding/MINT/client/public"
+                        <Link
+                            to="/login"
                             aria-label="Вход в систему"
                             title="Вход в систему"
                             className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
                         >
                             Вход в систему
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a
-                            href="/Projects/coding/MINT/client/public"
+                        <Link
+                            to="/register"
                             className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-accent-400 hover:bg-teal-accent-700 focus:shadow-outline focus:outline-none"
                             aria-label="Регистрация"
                             title="Регистрация"
                         >
                             Регистрация
-                        </a>
+                        </Link>
                     </li>
                 </ul>
                 <div className="lg:hidden">
@@ -119,8 +119,9 @@ export const NavBar = () => {
                             <div className="p-5 bg-white border rounded shadow-sm">
                                 <div className="flex items-center justify-between mb-4">
                                     <div>
-                                        <a
-                                            href="/Projects/coding/MINT/client/public"
+                                        <Link
+                                            to="/"
+                                            onClick={() => setIsMenuOpen(false)}
                                             aria-label="MINT"
                                             title="MINT"
                                             className="inline-flex items-center"
@@ -144,7 +145,7 @@ export const NavBar = () => {
                                                 className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">
                                                 MINT
                                             </span>
-                                        </a>
+                                        </Link>
                                     </div>
                                     <div>
                                         <button
@@ -167,56 +168,61 @@ export const NavBar = () => {
                                         {authValue && (
                                             <>
                                                 <li>
-                                                    <a
-                                                        href="/Projects/coding/MINT/client/public"
+                                                    <Link
+                                                        to="/activities"
+                                                        onClick={() => setIsMenuOpen(false)}
                                                         aria-label="Задачи"
                                                         title="Задачи"
                                                         className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
                                                     >
                                                         Задачи
-                                                    </a>
+                                                    </Link>
                                                 </li>
                                                 <li>
-                                                    <a
-                                                        href="/Projects/coding/MINT/client/public"
+                                                    <Link
+                                                        to="/analytics"
+                                                        onClick={() => setIsMenuOpen(false)}
                                                         aria-label="Аналитика"
                                                         title="Аналитика"
                                                         className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
                                                     >
                                                         Аналитика
-                                                    </a>
+                                                    </Link>
                                                 </li>
                                                 <li>
-                                                    <a
-                                                        href="/Projects/coding/MINT/client/public"
+                                                    <Link
+                                                        to="/profile"
+                                                        onClick={() => setIsMenuOpen(false)}
                                                         aria-label="Профиль"
                                                         title="Профиль"
                                                         className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
                                                     >
                                                         Профиль
-                                                    </a>
+                                                    </Link>
                                                 </li>
                                             </>
                                         )}
                                         <li>
-                                            <a
-                                                href="/Projects/coding/MINT/client/public"
+                                            <Link
+                                                to="/login"
+                                                onClick={() => setIsMenuOpen(false)}
                                                 aria-label="Вход в систему"
                                                 title="Вход в систему"
                                                 className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
                                             >
                                                 Вход в систему
-                                            </a>
+                                            </Link>
                                         </li>
                                         <li>
-                                            <a
-                                                href="/Projects/coding/MINT/client/public"
+                                            <Link
+                                                to="/register"
+                                                onClick={() => setIsMenuOpen(false)}
                                                 className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-accent-400 hover:bg-teal-accent-700 focus:shadow-outline focus:outline-none"
                                                 aria-label="Регистрация"
                                                 title="Регистрация"
                                             >
                                                 Регистрация
-                                            </a>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </nav>
