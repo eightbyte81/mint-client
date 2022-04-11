@@ -5,17 +5,15 @@ export const Statistic = () => {
                 <div className="flex flex-col justify-center">
                     <div className="max-w-xl mb-6">
                         <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl sm:leading-none">
-                            Innovative analytics
+                            Корпоративная платформа
                             <br className="hidden md:block" />
-                            that you{' '}
+                            которая вам{' '}
                             <span className="inline-block text-teal-accent-400">
-                                will love
+                                понравится
                             </span>
                         </h2>
                         <p className="text-base text-gray-700 md:text-lg">
-                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                            quae. explicabo.
+                            Платформа для вашего бизнеса, ориентированная на безопасность и удобство.
                         </p>
                     </div>
                 </div>
