@@ -1,5 +1,6 @@
 import {useContext, useState} from "react";
 import {AuthContext} from "../../context/AuthContext";
+import {Link} from "react-router-dom";
 
 export const NavBar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -9,8 +10,8 @@ export const NavBar = () => {
         <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
             <div className="relative flex items-center justify-between">
                 <div className="flex items-center">
-                    <a
-                        href="/"
+                    <Link
+                        to="/"
                         aria-label="MINT"
                         title="MINT"
                         className="inline-flex items-center mr-8"
@@ -33,38 +34,38 @@ export const NavBar = () => {
                         <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">
                             MINT
                         </span>
-                    </a>
+                    </Link>
                     {authValue && (
                         <ul className="flex items-center hidden space-x-8 lg:flex">
                             <li>
-                                <a
-                                    href="/activities"
+                                <Link
+                                    to="/activities"
                                     aria-label="Задачи"
                                     title="Задачи"
                                     className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
                                 >
                                     Задачи
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a
-                                    href="/analytics"
+                                <Link
+                                    to="/analytics"
                                     aria-label="Аналитика"
                                     title="Аналитика"
                                     className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
                                 >
                                     Аналитика
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a
-                                    href="/profile"
+                                <Link
+                                    to="/profile"
                                     aria-label="Профиль"
                                     title="Профиль"
                                     className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
                                 >
                                     Профиль
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     )}
