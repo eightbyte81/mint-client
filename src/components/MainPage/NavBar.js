@@ -8,13 +8,13 @@ export const NavBar = () => {
             <div className="relative flex items-center justify-between">
                 <div className="flex items-center">
                     <a
-                        href="/Projects/coding/MINT/client/public"
-                        aria-label="Company"
-                        title="Company"
+                        href="/"
+                        aria-label="MINT"
+                        title="MINT"
                         className="inline-flex items-center mr-8"
                     >
                         <svg
-                            className="w-8 text-deep-purple-accent-400"
+                            className="w-8 text-teal-accent-400"
                             viewBox="0 0 24 24"
                             strokeLinejoin="round"
                             strokeWidth="2"
@@ -29,48 +29,38 @@ export const NavBar = () => {
                             <rect x="14" y="11" width="7" height="12"/>
                         </svg>
                         <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">
-                            Company
+                            MINT
                         </span>
                     </a>
                     <ul className="flex items-center hidden space-x-8 lg:flex">
                         <li>
                             <a
-                                href="/Projects/coding/MINT/client/public"
-                                aria-label="Our product"
-                                title="Our product"
-                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                                href="/"
+                                aria-label="Задачи"
+                                title="Задачи"
+                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
                             >
-                                Product
+                                Задачи
                             </a>
                         </li>
                         <li>
                             <a
-                                href="/Projects/coding/MINT/client/public"
-                                aria-label="Our product"
-                                title="Our product"
-                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                                href="/"
+                                aria-label="Аналитика"
+                                title="Аналитика"
+                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
                             >
-                                Features
+                                Аналитика
                             </a>
                         </li>
                         <li>
                             <a
-                                href="/Projects/coding/MINT/client/public"
-                                aria-label="Product pricing"
-                                title="Product pricing"
-                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                                href="/"
+                                aria-label="Профиль"
+                                title="Профиль"
+                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
                             >
-                                Pricing
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="/Projects/coding/MINT/client/public"
-                                aria-label="About us"
-                                title="About us"
-                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                            >
-                                About us
+                                Профиль
                             </a>
                         </li>
                     </ul>
@@ -78,30 +68,30 @@ export const NavBar = () => {
                 <ul className="flex items-center hidden space-x-8 lg:flex">
                     <li>
                         <a
-                            href="/Projects/coding/MINT/client/public"
-                            aria-label="Sign in"
-                            title="Sign in"
-                            className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                            href="/"
+                            aria-label="Вход в систему"
+                            title="Вход в систему"
+                            className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
                         >
-                            Sign in
+                            Вход в систему
                         </a>
                     </li>
                     <li>
                         <a
-                            href="/Projects/coding/MINT/client/public"
-                            className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
-                            aria-label="Sign up"
-                            title="Sign up"
+                            href="/"
+                            className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-accent-400 hover:bg-teal-accent-700 focus:shadow-outline focus:outline-none"
+                            aria-label="Регистрация"
+                            title="Регистрация"
                         >
-                            Sign up
+                            Регистрация
                         </a>
                     </li>
                 </ul>
                 <div className="lg:hidden">
                     <button
-                        aria-label="Open Menu"
-                        title="Open Menu"
-                        className="p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50"
+                        aria-label="Открыть меню"
+                        title="Открыть меню"
+                        className="p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-teal-50 focus:bg-teal-50"
                         onClick={() => setIsMenuOpen(true)}
                     >
                         <svg className="w-5 text-gray-600" viewBox="0 0 24 24">
@@ -125,13 +115,13 @@ export const NavBar = () => {
                                 <div className="flex items-center justify-between mb-4">
                                     <div>
                                         <a
-                                            href="/Projects/coding/MINT/client/public"
-                                            aria-label="Company"
-                                            title="Company"
+                                            href="/"
+                                            aria-label="MINT"
+                                            title="MINT"
                                             className="inline-flex items-center"
                                         >
                                             <svg
-                                                className="w-8 text-deep-purple-accent-400"
+                                                className="w-8 text-teal-accent-400"
                                                 viewBox="0 0 24 24"
                                                 strokeLinejoin="round"
                                                 strokeWidth="2"
@@ -147,14 +137,14 @@ export const NavBar = () => {
                                             </svg>
                                             <span
                                                 className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">
-                                                Company
+                                                MINT
                                             </span>
                                         </a>
                                     </div>
                                     <div>
                                         <button
-                                            aria-label="Close Menu"
-                                            title="Close Menu"
+                                            aria-label="Закрыть меню"
+                                            title="Закрыть меню"
                                             className="p-2 -mt-2 -mr-2 transition duration-200 rounded hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                                             onClick={() => setIsMenuOpen(false)}
                                         >
@@ -171,62 +161,52 @@ export const NavBar = () => {
                                     <ul className="space-y-4">
                                         <li>
                                             <a
-                                                href="/Projects/coding/MINT/client/public"
-                                                aria-label="Our product"
-                                                title="Our product"
-                                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                                                href="/"
+                                                aria-label="Задачи"
+                                                title="Задачи"
+                                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
                                             >
-                                                Product
+                                                Задачи
                                             </a>
                                         </li>
                                         <li>
                                             <a
-                                                href="/Projects/coding/MINT/client/public"
-                                                aria-label="Our product"
-                                                title="Our product"
-                                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                                                href="/"
+                                                aria-label="Аналитика"
+                                                title="Аналитика"
+                                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
                                             >
-                                                Features
+                                                Аналитика
                                             </a>
                                         </li>
                                         <li>
                                             <a
-                                                href="/Projects/coding/MINT/client/public"
-                                                aria-label="Product pricing"
-                                                title="Product pricing"
-                                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                                                href="/"
+                                                aria-label="Профиль"
+                                                title="Профиль"
+                                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
                                             >
-                                                Pricing
+                                                Профиль
                                             </a>
                                         </li>
                                         <li>
                                             <a
-                                                href="/Projects/coding/MINT/client/public"
-                                                aria-label="About us"
-                                                title="About us"
-                                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                                                href="/"
+                                                aria-label="Вход в систему"
+                                                title="Вход в систему"
+                                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
                                             >
-                                                About us
+                                                Вход в систему
                                             </a>
                                         </li>
                                         <li>
                                             <a
-                                                href="/Projects/coding/MINT/client/public"
-                                                aria-label="Sign in"
-                                                title="Sign in"
-                                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                                                href="/"
+                                                className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-accent-400 hover:bg-teal-accent-700 focus:shadow-outline focus:outline-none"
+                                                aria-label="Регистрация"
+                                                title="Регистрация"
                                             >
-                                                Sign in
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="/Projects/coding/MINT/client/public"
-                                                className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
-                                                aria-label="Sign up"
-                                                title="Sign up"
-                                            >
-                                                Sign up
+                                                Регистрация
                                             </a>
                                         </li>
                                     </ul>
