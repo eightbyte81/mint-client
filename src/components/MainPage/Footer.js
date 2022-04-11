@@ -41,22 +41,34 @@ export const Footer = () => {
                         </a>
                         <div className="mt-4 lg:max-w-sm">
                             <p className="text-sm text-deep-purple-50">
-                                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                                accusantium doloremque laudantium, totam rem aperiam.
+                                Mint Is Not a Title - web-платформа для отслеживания и управления рабочими задачами
                             </p>
                         </div>
                     </div>
                     <div className="mt-10 grid grid-cols-2 gap-5 row-gap-4 lg:col-span-4 md:grid-cols-2">
                         <div className="mt-4 lg:max-w-sm">
                             <p className="text-sm text-deep-purple-50">
-                                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                                accusantium doloremque laudantium, totam rem aperiam.
+                                Приложение разработано с использованием{' '}
+                                <a href="https://spring.io/" className="inline-block text-teal-accent-400">
+                                    Spring Framework
+                                </a>
+                                {' '}и{' '}
+                                <a href="https://reactjs.org/" className="inline-block text-teal-accent-400">
+                                    React
+                                </a>
+                                {' '}в рамках дипломного проекта
                             </p>
                         </div>
                         <div className="mt-4 lg:max-w-sm">
                             <p className="text-sm text-deep-purple-50">
-                                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                                accusantium doloremque laudantium, totam rem aperiam.
+                                Дизайн создан при поддержке{' '}
+                                <a href="https://tailwindcss.com/" className="inline-block text-teal-accent-400">
+                                    Tailwind CSS
+                                </a>
+                                <br className="hidden md:block" />и{' '}
+                                <a href="https://kitwind.io/products/kometa" className="inline-block text-teal-accent-400">
+                                    Kometa UI Kit
+                                </a>
                             </p>
                         </div>
                     </div>
@@ -67,7 +79,7 @@ export const Footer = () => {
                     </p>
                     <div className="flex items-center mt-4 space-x-4 sm:mt-0">
                         <a
-                            href="/"
+                            href="https://github.com/eightbyte81"
                             className="transition-colors duration-300 text-deep-purple-100 hover:text-teal-accent-400"
                         >
                             <svg viewBox="0 0 24 24" fill="currentColor" className="h-6" >

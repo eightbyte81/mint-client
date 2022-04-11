@@ -9,8 +9,8 @@ export const Statistic = () => {
                             <br className="hidden md:block" />
                             that you{' '}
                             <span className="inline-block text-teal-accent-400">
-                will love
-              </span>
+                                will love
+                            </span>
                         </h2>
                         <p className="text-base text-gray-700 md:text-lg">
                             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
