@@ -1,5 +1,6 @@
 import axios from "axios"
 import Cookies from "universal-cookie"
+import {decodeJwt} from "jose"
 import serverApiUrl from "./env"
 
 const requestUrl = `${serverApiUrl}/auth`
@@ -34,7 +35,8 @@ async function login(loginUser) {
         })
 
         authToken = res.data
-        cookies.set('authToken', authToken['token'])
+        const {exp} = decodeJwt(authToken['token'])
+        cookies.set('authToken', authToken['token'], {expires: new Date(exp * 1000)})
     } catch (error) {
         console.log(error)
     }
