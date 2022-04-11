@@ -10,8 +10,8 @@ import Cookies from "universal-cookie"
 import {ActivityPage} from "./components/ActivityPage/ActivityPage";
 import {AnalyticsPage} from "./components/AnalyticsPage/AnalyticsPage";
 import {ProfilePage} from "./components/ProfilePage/ProfilePage";
-import {NotFoundPage} from "./components/NotFoundPage";
-import {NavBar} from "./components/MainPage/NavBar";
+import {NotFoundPage} from "./components/NotFoundPage/NotFoundPage";
+import {NavBar} from "./components/NavBar/NavBar";
 
 function App() {
     const cookies = new Cookies()
