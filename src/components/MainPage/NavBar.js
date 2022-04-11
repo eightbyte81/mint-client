@@ -1,7 +1,9 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
+import {AuthContext} from "../../context/AuthContext";
 
 export const NavBar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const authValue = useContext(AuthContext)
 
     return (
         <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
@@ -32,38 +34,40 @@ export const NavBar = () => {
                             MINT
                         </span>
                     </a>
-                    <ul className="flex items-center hidden space-x-8 lg:flex">
-                        <li>
-                            <a
-                                href="/"
-                                aria-label="Задачи"
-                                title="Задачи"
-                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
-                            >
-                                Задачи
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="/"
-                                aria-label="Аналитика"
-                                title="Аналитика"
-                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
-                            >
-                                Аналитика
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="/"
-                                aria-label="Профиль"
-                                title="Профиль"
-                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
-                            >
-                                Профиль
-                            </a>
-                        </li>
-                    </ul>
+                    {authValue && (
+                        <ul className="flex items-center hidden space-x-8 lg:flex">
+                            <li>
+                                <a
+                                    href="/"
+                                    aria-label="Задачи"
+                                    title="Задачи"
+                                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
+                                >
+                                    Задачи
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/"
+                                    aria-label="Аналитика"
+                                    title="Аналитика"
+                                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
+                                >
+                                    Аналитика
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/"
+                                    aria-label="Профиль"
+                                    title="Профиль"
+                                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
+                                >
+                                    Профиль
+                                </a>
+                            </li>
+                        </ul>
+                    )}
                 </div>
                 <ul className="flex items-center hidden space-x-8 lg:flex">
                     <li>
@@ -159,36 +163,40 @@ export const NavBar = () => {
                                 </div>
                                 <nav>
                                     <ul className="space-y-4">
-                                        <li>
-                                            <a
-                                                href="/"
-                                                aria-label="Задачи"
-                                                title="Задачи"
-                                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
-                                            >
-                                                Задачи
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="/"
-                                                aria-label="Аналитика"
-                                                title="Аналитика"
-                                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
-                                            >
-                                                Аналитика
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="/"
-                                                aria-label="Профиль"
-                                                title="Профиль"
-                                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
-                                            >
-                                                Профиль
-                                            </a>
-                                        </li>
+                                        {authValue && (
+                                            <>
+                                                <li>
+                                                    <a
+                                                        href="/"
+                                                        aria-label="Задачи"
+                                                        title="Задачи"
+                                                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
+                                                    >
+                                                        Задачи
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        href="/"
+                                                        aria-label="Аналитика"
+                                                        title="Аналитика"
+                                                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
+                                                    >
+                                                        Аналитика
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        href="/"
+                                                        aria-label="Профиль"
+                                                        title="Профиль"
+                                                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
+                                                    >
+                                                        Профиль
+                                                    </a>
+                                                </li>
+                                            </>
+                                        )}
                                         <li>
                                             <a
                                                 href="/"

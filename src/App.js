@@ -1,7 +1,7 @@
 import './App.css'
 import React from "react"
 import {MainPage} from "./components/MainPage/MainPage"
-import {AuthContext} from "./components/AuthContext"
+import {AuthContext} from "./context/AuthContext"
 import Cookies from "universal-cookie"
 import ApiTest from "./api/ApiTest";
 
@@ -12,7 +12,7 @@ function App() {
     return (
     <div className="App">
         <AuthContext.Provider value={authValue}>
-            <ApiTest />
+            {/*<ApiTest />*/}
             <MainPage />
         </AuthContext.Provider>
     </div>
