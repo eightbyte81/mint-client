@@ -1,15 +1,22 @@
-import {useState} from "react";
 import {login} from "../../../api/authService";
+import {useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 
 export const LoginPage = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [isRemembered, setIsRemembered] = useState(false)
+
+    let navigate = useNavigate();
 
     const handleSubmit = async e => {
         e.preventDefault()
-        const token = await login({username, password})
+        const token = await login({username, password}, isRemembered)
         console.log(token)
-        e.target.reset()
+        setUsername('')
+        setPassword('')
+        setIsRemembered(false)
+        navigate("/profile", {replace: true})
     }
 
     return (
@@ -58,11 +65,24 @@ export const LoginPage = () => {
                         </div>
                     </div>
 
-                    <div className="flex items-end justify-end">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                            <input
+                                id="remember-me"
+                                name="remember-me"
+                                type="checkbox"
+                                onChange={_ => setIsRemembered(currentIsRemembered => !currentIsRemembered)}
+                                className="h-4 w-4 text-indigo-600 focus:ring-teal-500 border-gray-300 rounded"
+                            />
+                            <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                                Запомнить меня
+                            </label>
+                        </div>
+
                         <div className="text-sm">
-                            <a href="/" className="font-medium text-teal-accent-400 hover:text-teal-accent-500">
+                            <Link to="/forgot-password" className="font-medium text-teal-600 hover:text-teal-500">
                                 Забыли пароль?
-                            </a>
+                            </Link>
                         </div>
                     </div>
 

@@ -23,7 +23,7 @@ async function register(user) {
     return returnData
 }
 
-async function login(loginUser) {
+async function login(loginUser, isRemembered) {
     let authToken = null
     const cookies = new Cookies()
 
@@ -35,8 +35,15 @@ async function login(loginUser) {
         })
 
         authToken = res.data
-        const {exp} = decodeJwt(authToken['token'])
-        cookies.set('authToken', authToken['token'], {expires: new Date(exp * 1000)})
+
+        if (isRemembered) {
+            sessionStorage.removeItem('authToken')
+            const {exp} = decodeJwt(authToken['token'])
+            cookies.set('authToken', authToken['token'], {expires: new Date(exp * 1000)})
+        } else {
+            cookies.remove('authToken')
+            sessionStorage.setItem('authToken', authToken['token'])
+        }
     } catch (error) {
         console.log(error)
     }

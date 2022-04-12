@@ -80,7 +80,7 @@ function ApiTest() {
                 <h1>Auth</h1>
                 <button onClick={() => register(adminRegister)}>Register admin</button>
                 <button onClick={() => register(userRegister)}>Register user</button>
-                <button onClick={() => login(loginUser)}>Login</button>
+                <button onClick={() => login(loginUser, true)}>Login</button>
             </div>
             <div>
                 <h1>User</h1>

@@ -17,7 +17,7 @@ import {RegisterPage} from "./components/AuthPage/RegisterPage/RegisterPage";
 
 function App() {
     const cookies = new Cookies()
-    const authValue = cookies.get('authToken') !== undefined
+    const authValue = cookies.get('authToken') !== undefined || sessionStorage.getItem('authToken') !== null
 
     return (
     <div className="App">
