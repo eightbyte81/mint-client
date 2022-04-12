@@ -1,5 +1,5 @@
 import {register, login} from './authService'
-import {getAllUsers, getUserById, updateUser, updateUserRole, deleteUser} from "./userService"
+import {getAllUsers, getUserById, getUserByUsername, updateUser, updateUserRole, deleteUser} from "./userService"
 import {getAllActivities, getAllActivitiesByUser, createActivity,
     addChildActivity, addActivityToUser, updateActivityStatus, deleteActivity} from "./activityService"
 import {getAllTeams, getTeamById, addTeam, addUserToTeam, updateTeam, deleteTeam} from "./teamService"
@@ -86,6 +86,7 @@ function ApiTest() {
                 <h1>User</h1>
                 <button onClick={() => getAllUsers()}>Get all users</button>
                 <button onClick={() => getUserById(1)}>Get user by id</button>
+                <button onClick={() => getUserByUsername("admin")}>Get user by username</button>
                 <button onClick={() => updateUser(updatedUser)}>Update user</button>
                 <button onClick={() => updateUserRole(changeRoleForm, 1)}>Update user role</button>
                 <button onClick={() => deleteUser(2)}>Delete user</button>

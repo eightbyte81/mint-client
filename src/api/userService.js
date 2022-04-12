@@ -46,6 +46,30 @@ async function getUserById(id) {
     return returnData
 }
 
+async function getUserByUsername(username) {
+    let returnData = null
+    const cookies = new Cookies()
+
+    try {
+        let res = await axios({
+            url: `${requestUrl}/find-by-username`,
+            method: "GET",
+            headers: {
+                'Authorization': `Bearer ${cookies.get('authToken')}`
+            },
+            params: {
+                "username": username
+            }
+        })
+
+        returnData = res.data
+    } catch (error) {
+        console.log(error)
+    }
+
+    return returnData
+}
+
 async function updateUser(user) {
     let returnData = null
     const cookies = new Cookies()
@@ -111,4 +135,4 @@ async function deleteUser(id) {
     return returnData
 }
 
-export {getAllUsers, getUserById, updateUser, updateUserRole, deleteUser}
+export {getAllUsers, getUserById, getUserByUsername, updateUser, updateUserRole, deleteUser}
