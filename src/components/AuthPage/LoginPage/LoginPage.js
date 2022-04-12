@@ -1,21 +1,28 @@
 import {login} from "../../../api/authService";
 import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
+import {DangerAlert} from "../../alerts/DangerAlert";
 
 export const LoginPage = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [isRemembered, setIsRemembered] = useState(false)
+    const [showDanger, setShowDanger] = useState(false)
 
     let navigate = useNavigate();
 
     const handleSubmit = async e => {
         e.preventDefault()
         const token = await login({username, password}, isRemembered)
-        console.log(token)
+        if (token === null) {
+            setShowDanger(true)
+            return
+        }
+
         setUsername('')
         setPassword('')
         setIsRemembered(false)
+
         navigate("/profile", {replace: true})
     }
 
@@ -33,7 +40,7 @@ export const LoginPage = () => {
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit} method="POST">
                     <input type="hidden" name="remember" defaultValue="true" />
                     <div className="rounded-md shadow-sm -space-y-px">
-                        <div>
+                        <div className="pb-3">
                             <label htmlFor="username" className="sr-only">
                                 Имя пользователя
                             </label>
@@ -95,6 +102,9 @@ export const LoginPage = () => {
                         </button>
                     </div>
                 </form>
+                {showDanger && (
+                    <DangerAlert />
+                )}
             </div>
         </div>
     )

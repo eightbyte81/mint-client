@@ -70,28 +70,30 @@ export const NavBar = () => {
                         </ul>
                     )}
                 </div>
-                <ul className="flex items-center hidden space-x-8 lg:flex">
-                    <li>
-                        <Link
-                            to="/login"
-                            aria-label="Вход в систему"
-                            title="Вход в систему"
-                            className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
-                        >
-                            Вход в систему
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/register"
-                            className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-accent-400 hover:bg-teal-accent-700 focus:shadow-outline focus:outline-none"
-                            aria-label="Регистрация"
-                            title="Регистрация"
-                        >
-                            Регистрация
-                        </Link>
-                    </li>
-                </ul>
+                {!authValue && (
+                    <ul className="flex items-center hidden space-x-8 lg:flex">
+                        <li>
+                            <Link
+                                to="/login"
+                                aria-label="Вход в систему"
+                                title="Вход в систему"
+                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
+                            >
+                                Вход в систему
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to="/register"
+                                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-accent-400 hover:bg-teal-accent-700 focus:shadow-outline focus:outline-none"
+                                aria-label="Регистрация"
+                                title="Регистрация"
+                            >
+                                Регистрация
+                            </Link>
+                        </li>
+                    </ul>
+                )}
                 <div className="lg:hidden">
                     <button
                         aria-label="Открыть меню"
@@ -202,28 +204,30 @@ export const NavBar = () => {
                                                 </li>
                                             </>
                                         )}
-                                        <li>
-                                            <Link
-                                                to="/login"
-                                                onClick={() => setIsMenuOpen(false)}
-                                                aria-label="Вход в систему"
-                                                title="Вход в систему"
-                                                className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
-                                            >
-                                                Вход в систему
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                to="/register"
-                                                onClick={() => setIsMenuOpen(false)}
-                                                className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-accent-400 hover:bg-teal-accent-700 focus:shadow-outline focus:outline-none"
-                                                aria-label="Регистрация"
-                                                title="Регистрация"
-                                            >
-                                                Регистрация
-                                            </Link>
-                                        </li>
+                                        {!authValue && (
+                                            <ul className="flex items-center hidden space-x-8 lg:flex">
+                                                <li>
+                                                    <Link
+                                                        to="/login"
+                                                        aria-label="Вход в систему"
+                                                        title="Вход в систему"
+                                                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
+                                                    >
+                                                        Вход в систему
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link
+                                                        to="/register"
+                                                        className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-accent-400 hover:bg-teal-accent-700 focus:shadow-outline focus:outline-none"
+                                                        aria-label="Регистрация"
+                                                        title="Регистрация"
+                                                    >
+                                                        Регистрация
+                                                    </Link>
+                                                </li>
+                                            </ul>
+                                        )}
                                     </ul>
                                 </nav>
                             </div>
