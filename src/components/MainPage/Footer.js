@@ -65,9 +65,13 @@ export const Footer = () => {
                                 <a href="https://tailwindcss.com/" className="inline-block text-teal-accent-400">
                                     Tailwind CSS
                                 </a>
-                                <br className="hidden md:block" />и{' '}
+                                {' '}
                                 <a href="https://kitwind.io/products/kometa" className="inline-block text-teal-accent-400">
                                     Kometa UI Kit
+                                </a>
+                                {' '}и{' '}
+                                <a href="https://flowbite.com/" className="inline-block text-teal-accent-400">
+                                    Flowbite
                                 </a>
                             </p>
                         </div>

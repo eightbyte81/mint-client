@@ -2,6 +2,7 @@ import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {register} from "../../../api/authService";
 import {DangerAlert} from "../../alerts/DangerAlert";
+import {Spinner} from "../../spinner/Spinner";
 
 export const RegisterPage = () => {
     const [name, setName] = useState('')
@@ -10,14 +11,18 @@ export const RegisterPage = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [showDanger, setShowDanger] = useState(false)
+    const [showSpinner, setShowSpinner] = useState(false)
 
     let navigate = useNavigate();
 
     const handleSubmit = async e => {
         e.preventDefault()
+        if (showDanger) setShowDanger(false)
+        setShowSpinner(true);
 
         const user = await register({name, lastname, username, email, password, "enabled": false })
         if (user === null) {
+            setShowSpinner(false)
             setShowDanger(true)
             return
         }
@@ -130,6 +135,9 @@ export const RegisterPage = () => {
                         </button>
                     </div>
                 </form>
+                {showSpinner && (
+                    <Spinner />
+                )}
                 {showDanger && (
                     <DangerAlert />
                 )}

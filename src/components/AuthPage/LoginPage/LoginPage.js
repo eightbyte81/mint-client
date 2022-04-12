@@ -2,19 +2,25 @@ import {login} from "../../../api/authService";
 import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {DangerAlert} from "../../alerts/DangerAlert";
+import {Spinner} from "../../spinner/Spinner";
 
 export const LoginPage = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [isRemembered, setIsRemembered] = useState(false)
     const [showDanger, setShowDanger] = useState(false)
+    const [showSpinner, setShowSpinner] = useState(false)
 
     let navigate = useNavigate();
 
     const handleSubmit = async e => {
         e.preventDefault()
+        if (showDanger) setShowDanger(false)
+        setShowSpinner(true);
+
         const token = await login({username, password}, isRemembered)
         if (token === null) {
+            setShowSpinner(false)
             setShowDanger(true)
             return
         }
@@ -102,6 +108,9 @@ export const LoginPage = () => {
                         </button>
                     </div>
                 </form>
+                {showSpinner && (
+                    <Spinner />
+                )}
                 {showDanger && (
                     <DangerAlert />
                 )}
