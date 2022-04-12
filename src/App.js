@@ -26,11 +26,19 @@ function App() {
             <NavBar />
         <Routes>
             <Route path="/" element={<MainPage />} />
-            <Route path="/activities" element={<ActivityPage />} />
-            <Route path="/analytics" element={<AnalyticsPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+            {authValue && (
+                <>
+                    <Route path="/activities" element={<ActivityPage />} />
+                    <Route path="/analytics" element={<AnalyticsPage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
+                </>
+            )}
+            {!authValue && (
+                <>
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
+                </>
+            )}
             <Route path="*" element={<NotFoundPage />}/>
         </Routes>
         </AuthContext.Provider>
