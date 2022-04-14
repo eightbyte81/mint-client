@@ -1,12 +1,13 @@
-export const ImageUploadModal = ({handleModalButtons}) => {
+export const UserToActivityModal = ({handleModalButtons}) => {
+
     return (
-        <div id="imageUploadModal" tabIndex="-1" aria-hidden="true"
+        <div id="activityFormModal" tabIndex="-1" aria-hidden="true"
              className="justify-center items-center flex overflow-y-auto overflow-x-hidden fixed z-50 w-full md:inset-0 h-modal md:h-full">
             <div className="relative p-4 w-full max-w-2xl h-full md:h-auto">
-                <div className="relative rounded-lg shadow bg-deep-purple-accent-400">
+                <div className="relative rounded-lg shadow bg-zinc-600">
                     <div className="flex justify-between items-start p-5 rounded-t">
                         <h3 className="text-xl font-semibold text-deep-purple-50 lg:text-2xl">
-                            Загрузка изображения
+                            Добавление пользователя к задаче
                         </h3>
                         <button type="button"
                                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
@@ -20,24 +21,35 @@ export const ImageUploadModal = ({handleModalButtons}) => {
                             </svg>
                         </button>
                     </div>
-                    <div className="p-6 space-y-6 text-left">
+                    <div className="pt-3 px-6 space-y-6 text-left">
                         <input
                             className="text-base leading-relaxed rounded-md focus:outline-none text-gray-700 p-2 w-full"
-                            placeholder="Введите URL изображения"
+                            placeholder="Фамилия Имя"
                         />
                     </div>
+                    <ul className="overflow-y-auto max-h-56 pt-3 px-8 space-y-6 text-left">
+                        <li
+                            className="flex justify-start text-white my-2">
+                            <input
+                                type="checkbox"
+                                className="h-6 w-4 text-indigo-600 focus:ring-teal-500 border-gray-300 rounded"
+                            />
+                            <div className="flex-grow font-medium px-2">Tighten Co.</div>
+                            <div className="text-sm font-normal text-gray-500 tracking-wide">Team</div>
+                        </li>
+                    </ul>
                     <div
                         className="flex gap-2 flex-row-reverse p-6 rounded-b">
                         <button
                             // onClick={_ => handleLogout()}
                             type="button"
                             className="text-white bg-teal-accent-700 hover:bg-teal-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                            Загрузить
+                            Добавить
                         </button>
                         <button
                             onClick={_ => handleModalButtons(false)}
                             type="button"
-                                className="text-gray-800 bg-white hover:bg-gray-100 rounded-lg text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+                            className="text-gray-800 bg-white hover:bg-gray-100 rounded-lg text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
                         >
                             Отмена
                         </button>

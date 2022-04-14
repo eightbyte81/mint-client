@@ -7,7 +7,7 @@ export const ProfilePage = () => {
     const [imageUploadModal, setImageUploadModal] = useState(false)
 
     let profilePageClasses = "grid grid-cols-2"
-    if (logoutModal || imageUploadModal) profilePageClasses += " blur"
+    if (logoutModal || imageUploadModal) profilePageClasses += " opacity-25"
 
     const handleLogoutModalButtons = (value) => {
         setLogoutModal(value)
@@ -96,7 +96,7 @@ export const ProfilePage = () => {
                                         // onChange={e => setUsername(e.target.value)}
                                         autoComplete="username"
                                         required
-                                        className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-teal-accent-400 focus:border-teal-accent-400 focus:z-10 sm:text-sm"
+                                        className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 rounded-b-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-teal-accent-400 focus:border-teal-accent-400 focus:z-10 sm:text-sm"
                                         placeholder="Имя пользователя"
                                     />
                                 </div>

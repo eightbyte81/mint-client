@@ -1,4 +1,13 @@
+import {useState} from "react";
+import {UserToActivityModal} from "./UserToActivityModal";
+
 export const ActivityDescription = () => {
+    const [userToActivityModal, setUserToActivityModal] = useState(false)
+
+    const handleUserToActivityModalButtons = (value) => {
+        setUserToActivityModal(value)
+    }
+
     return (
         <div className="flex justify-center">
             <div className="block rounded-lg shadow-lg bg-white w-full text-center">
@@ -19,6 +28,13 @@ export const ActivityDescription = () => {
                     {/*</button>*/}
                     <div>
                         <div className="text-left text-base text-gray-800 m-3">
+                            <button className="mr-3 border-2 rounded-md hover:border-deep-purple-accent-700"
+                                onClick={_ => handleUserToActivityModalButtons(true)}
+                            >
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                </svg>
+                            </button>
                             Пользователи:
                         </div>
                         <ul className="flex flex-col max-w-fit">
@@ -45,6 +61,9 @@ export const ActivityDescription = () => {
                     2 days ago
                 </div>
             </div>
+            {userToActivityModal && (
+                <UserToActivityModal handleModalButtons={handleUserToActivityModalButtons} />
+            )}
         </div>
     )
 }

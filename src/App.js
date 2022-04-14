@@ -14,6 +14,7 @@ import {NotFoundPage} from "./components/NotFoundPage/NotFoundPage";
 import {NavBar} from "./components/NavBar/NavBar";
 import {LoginPage} from "./components/AuthPage/LoginPage/LoginPage";
 import {RegisterPage} from "./components/AuthPage/RegisterPage/RegisterPage";
+import {ManagementPage} from "./components/ManagementPage/ManagementPage";
 
 function App() {
     const cookies = new Cookies()
@@ -33,6 +34,8 @@ function App() {
                     <Route path="/profile" element={<ProfilePage />} />
                 </>
             )}
+            {/*Check ROLE_LEAD or ROLE_ADMIN and add to NavBar*/}
+            <Route path="/management" element={<ManagementPage />} />
             {!authValue && (
                 <>
                     <Route path="/login" element={<LoginPage />} />
