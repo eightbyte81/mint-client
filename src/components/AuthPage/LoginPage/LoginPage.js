@@ -30,6 +30,7 @@ export const LoginPage = () => {
         setIsRemembered(false)
 
         navigate("/profile", {replace: true})
+        window.location.reload()
     }
 
     return (
