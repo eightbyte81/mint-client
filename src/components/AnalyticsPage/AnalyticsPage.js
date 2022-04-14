@@ -1,3 +1,5 @@
+import {TeamMembers} from "./TeamMembers";
+
 export const AnalyticsPage = () => {
     return (
         <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
@@ -7,10 +9,6 @@ export const AnalyticsPage = () => {
                         <p className="mb-2 text-lg font-bold">Название команды</p>
                         <p className="text-gray-700">
                             Аналитика поможет оценить продуктивность рабочего процесса
-                        </p>
-                    </div>
-                    <div>
-                        <p className="text-gray-700">
                         </p>
                     </div>
                 </div>
@@ -69,6 +67,7 @@ export const AnalyticsPage = () => {
                     </div>
                 </div>
             </div>
+            <TeamMembers />
         </div>
     )
 }
