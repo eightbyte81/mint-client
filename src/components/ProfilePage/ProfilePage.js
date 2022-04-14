@@ -1,14 +1,20 @@
 import {useState} from "react";
 import {LogoutModal} from "./LogoutModal";
+import {ImageUploadModal} from "./ImageUploadModal";
 
 export const ProfilePage = () => {
     const [logoutModal, setLogoutModal] = useState(false)
+    const [imageUploadModal, setImageUploadModal] = useState(false)
 
     let profilePageClasses = "grid grid-cols-2"
-    if (logoutModal) profilePageClasses += " blur"
+    if (logoutModal || imageUploadModal) profilePageClasses += " blur"
 
-    const handleModalButtons = (value) => {
+    const handleLogoutModalButtons = (value) => {
         setLogoutModal(value)
+    }
+
+    const handleImageUploadModalButtons = (value) => {
+        setImageUploadModal(value)
     }
 
     return (
@@ -16,8 +22,10 @@ export const ProfilePage = () => {
             <div className={profilePageClasses}>
                 <div className="grid grid-cols-1 gap-4 max-w-screen-sm items-center text-left space-x-4 mb-5">
                     <div className="space-y-1 font-medium text-gray-800">
-                        <img className="rounded w-56 h-56" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSK1mi4O2s4RYI03ohZ62KyBT3HRe69-xXNQ&usqp=CAU"
-                             alt="avatar" />
+                        <button onClick={_ => setImageUploadModal(true)}>
+                            <img className="rounded w-56 h-56" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSK1mi4O2s4RYI03ohZ62KyBT3HRe69-xXNQ&usqp=CAU"
+                                 alt="avatar"/>
+                        </button>
 
                     </div>
                     <div className="space-y-1 font-medium text-gray-800">
@@ -151,7 +159,10 @@ export const ProfilePage = () => {
                 </div>
             </div>
             {logoutModal && (
-                <LogoutModal handleModalButtons={handleModalButtons} />
+                <LogoutModal handleModalButtons={handleLogoutModalButtons} />
+            )}
+            {imageUploadModal && (
+                <ImageUploadModal handleModalButtons={handleImageUploadModalButtons} />
             )}
         </div>
     )

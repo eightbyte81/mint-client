@@ -1,19 +1,4 @@
-import Cookies from "universal-cookie";
-import {useNavigate} from "react-router-dom";
-
-export const LogoutModal = ({handleModalButtons}) => {
-    const navigate = useNavigate()
-
-    const handleLogout = () => {
-        handleModalButtons(false)
-
-        const cookie = new Cookies()
-        cookie.remove("authToken")
-        sessionStorage.removeItem("authToken")
-        navigate("/", {replace: true})
-        window.location.reload()
-    }
-
+export const ImageUploadModal = ({handleModalButtons}) => {
     return (
         <div id="logoutModal" tabIndex="-1" aria-hidden="true"
              className="justify-center items-center flex overflow-y-auto overflow-x-hidden fixed z-50 w-full md:inset-0 h-modal md:h-full">
@@ -21,7 +6,7 @@ export const LogoutModal = ({handleModalButtons}) => {
                 <div className="relative rounded-lg shadow bg-deep-purple-accent-400">
                     <div className="flex justify-between items-start p-5 rounded-t">
                         <h3 className="text-xl font-semibold text-deep-purple-50 lg:text-2xl">
-                            Выход из системы
+                            Загрузка изображения
                         </h3>
                         <button type="button"
                                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
@@ -36,17 +21,22 @@ export const LogoutModal = ({handleModalButtons}) => {
                         </button>
                     </div>
                     <div className="p-6 space-y-6 text-left">
-                        <p className="text-base leading-relaxed text-deep-purple-50">
-                            Вы действительно хотите выйти из системы?
-                        </p>
+                        <input
+                            className="text-base leading-relaxed rounded-md focus:outline-none text-gray-700 p-2 w-full"
+                            placeholder="Введите URL изображения"
+                        />
                     </div>
                     <div
-                        className="flex items-center p-6 space-x-2 rounded-b">
-                        <button onClick={_ => handleLogout()} type="button"
-                                className="text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                            Выход
+                        className="flex gap-2 flex-row-reverse p-6 rounded-b">
+                        <button
+                            // onClick={_ => handleLogout()}
+                            type="button"
+                            className="text-white bg-teal-accent-700 hover:bg-teal-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            Загрузить
                         </button>
-                        <button onClick={_ => handleModalButtons(false)} type="button"
+                        <button
+                            onClick={_ => handleModalButtons(false)}
+                            type="button"
                                 className="text-gray-800 bg-white hover:bg-gray-100 rounded-lg text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
                         >
                             Отмена
