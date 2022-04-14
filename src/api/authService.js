@@ -7,6 +7,7 @@ const requestUrl = `${serverApiUrl}/auth`
 
 async function register(user) {
     let returnData = null
+    let errorMessage = null
 
     try {
         let res = await axios({
@@ -17,14 +18,15 @@ async function register(user) {
 
         returnData = res.data
     } catch (error) {
-        console.log(error)
+        errorMessage = error
     }
 
-    return returnData
+    return [returnData, errorMessage]
 }
 
 async function login(loginUser, isRemembered) {
     let authToken = null
+    let errorMessage = null
     const cookies = new Cookies()
 
     try {
@@ -45,10 +47,10 @@ async function login(loginUser, isRemembered) {
             sessionStorage.setItem('authToken', authToken['token'])
         }
     } catch (error) {
-        console.log(error)
+        errorMessage = error
     }
 
-    return authToken
+    return [authToken, errorMessage]
 }
 
 export {register, login}

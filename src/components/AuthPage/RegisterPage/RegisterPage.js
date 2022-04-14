@@ -12,6 +12,7 @@ export const RegisterPage = () => {
     const password = useRef('')
     const [showDanger, setShowDanger] = useState(false)
     const [showSpinner, setShowSpinner] = useState(false)
+    const [errorMsg, setErrorMsg] = useState('')
 
     let navigate = useNavigate();
 
@@ -29,8 +30,9 @@ export const RegisterPage = () => {
             "enabled": false
         }
 
-        const registerResponse = await register(user)
-        if (registerResponse === null) {
+        const [returnData, errorMessage] = await register(user)
+        if (returnData === null) {
+            setErrorMsg(errorMessage)
             setShowSpinner(false)
             setShowDanger(true)
             return
@@ -148,7 +150,7 @@ export const RegisterPage = () => {
                     <Spinner />
                 )}
                 {showDanger && (
-                    <DangerAlert />
+                    <DangerAlert dangerMessage={errorMsg} />
                 )}
             </div>
         </div>

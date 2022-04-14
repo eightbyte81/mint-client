@@ -1,53 +1,21 @@
 import axios from "axios"
 import Cookies from "universal-cookie"
 import serverApiUrl from "./env"
+import {deleteById, getAll, getById} from "./mainService";
 
 const requestUrl = `${serverApiUrl}/team`
 
 async function getAllTeams() {
-    let returnData = null
-    const cookies = new Cookies()
-
-    try {
-        let res = await axios({
-            url: `${requestUrl}/`,
-            method: "GET",
-            headers: {
-                'Authorization': `Bearer ${cookies.get('authToken')}`
-            }
-        })
-
-        returnData = res.data
-    } catch (error) {
-        console.log(error)
-    }
-
-    return returnData
+    return getAll(requestUrl)
 }
 
 async function getTeamById(id) {
-    let returnData = null
-    const cookies = new Cookies()
-
-    try {
-        let res = await axios({
-            url: `${requestUrl}/${id}`,
-            method: "GET",
-            headers: {
-                'Authorization': `Bearer ${cookies.get('authToken')}`
-            }
-        })
-
-        returnData = res.data
-    } catch (error) {
-        console.log(error)
-    }
-
-    return returnData
+    return getById(requestUrl, id)
 }
 
 async function addTeam(team) {
     let returnData = null
+    let errorMessage = null
     const cookies = new Cookies()
 
     try {
@@ -62,14 +30,15 @@ async function addTeam(team) {
 
         returnData = res.data
     } catch (error) {
-        console.log(error)
+        errorMessage = error
     }
 
-    return returnData
+    return [returnData, errorMessage]
 }
 
 async function addUserToTeam(userToTeamForm) {
     let returnData = null
+    let errorMessage = null
     const cookies = new Cookies()
 
     try {
@@ -84,14 +53,15 @@ async function addUserToTeam(userToTeamForm) {
 
         returnData = res.data
     } catch (error) {
-        console.log(error)
+        errorMessage = error
     }
 
-    return returnData
+    return [returnData, errorMessage]
 }
 
 async function updateTeam(team) {
     let returnData = null
+    let errorMessage = null
     const cookies = new Cookies()
 
     try {
@@ -106,31 +76,14 @@ async function updateTeam(team) {
 
         returnData = res.data
     } catch (error) {
-        console.log(error)
+        errorMessage = error
     }
 
-    return returnData
+    return [returnData, errorMessage]
 }
 
 async function deleteTeam(id) {
-    let returnData = null
-    const cookies = new Cookies()
-
-    try {
-        let res = await axios({
-            url: `${requestUrl}/${id}`,
-            method: "DELETE",
-            headers: {
-                'Authorization': `Bearer ${cookies.get('authToken')}`
-            }
-        })
-
-        returnData = res.data
-    } catch (error) {
-        console.log(error)
-    }
-
-    return returnData
+    return deleteById(requestUrl, id)
 }
 
 export {getAllTeams, getTeamById, addTeam, addUserToTeam, updateTeam, deleteTeam}

@@ -1,32 +1,17 @@
-import axios from "axios"
-import Cookies from "universal-cookie"
-import serverApiUrl from "./env"
-import {deleteById, getAll, getById} from "./mainService";
+import Cookies from "universal-cookie";
+import axios from "axios";
 
-const requestUrl = `${serverApiUrl}/user`
-
-async function getAllUsers() {
-    return getAll(requestUrl)
-}
-
-async function getUserById(id) {
-    return getById(requestUrl, id)
-}
-
-async function getUserByUsername(username) {
+async function getAll(requestUrl) {
     let returnData = null
     let errorMessage = null
     const cookies = new Cookies()
 
     try {
         let res = await axios({
-            url: `${requestUrl}/find-by-username`,
+            url: `${requestUrl}/`,
             method: "GET",
             headers: {
                 'Authorization': `Bearer ${cookies.get('authToken')}`
-            },
-            params: {
-                "username": username
             }
         })
 
@@ -38,30 +23,7 @@ async function getUserByUsername(username) {
     return [returnData, errorMessage]
 }
 
-async function updateUser(user) {
-    let returnData = null
-    let errorMessage = null
-    const cookies = new Cookies()
-
-    try {
-        let res = await axios({
-            url: `${requestUrl}/`,
-            method: "PUT",
-            headers: {
-                'Authorization': `Bearer ${cookies.get('authToken')}`
-            },
-            data: user
-        })
-
-        returnData = res.data
-    } catch (error) {
-        errorMessage = error
-    }
-
-    return [returnData, errorMessage]
-}
-
-async function updateUserRole(changeRoleForm, id) {
+async function getById(requestUrl, id) {
     let returnData = null
     let errorMessage = null
     const cookies = new Cookies()
@@ -69,11 +31,10 @@ async function updateUserRole(changeRoleForm, id) {
     try {
         let res = await axios({
             url: `${requestUrl}/${id}`,
-            method: "PUT",
+            method: "GET",
             headers: {
                 'Authorization': `Bearer ${cookies.get('authToken')}`
-            },
-            data: changeRoleForm
+            }
         })
 
         returnData = res.data
@@ -84,8 +45,26 @@ async function updateUserRole(changeRoleForm, id) {
     return [returnData, errorMessage]
 }
 
-async function deleteUser(id) {
-    return deleteById(requestUrl, id)
+async function deleteById(requestUrl, id) {
+    let returnData = null
+    let errorMessage = null
+    const cookies = new Cookies()
+
+    try {
+        let res = await axios({
+            url: `${requestUrl}/${id}`,
+            method: "DELETE",
+            headers: {
+                'Authorization': `Bearer ${cookies.get('authToken')}`
+            }
+        })
+
+        returnData = res.data
+    } catch (error) {
+        errorMessage = error
+    }
+
+    return [returnData, errorMessage]
 }
 
-export {getAllUsers, getUserById, getUserByUsername, updateUser, updateUserRole, deleteUser}
+export {getAll, getById, deleteById}

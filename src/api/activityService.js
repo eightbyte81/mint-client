@@ -1,53 +1,21 @@
 import axios from "axios"
 import Cookies from "universal-cookie"
 import serverApiUrl from "./env"
+import {deleteById, getAll, getById} from "./mainService";
 
 const requestUrl = `${serverApiUrl}/activity`
 
 async function getAllActivities() {
-    let returnData = null
-    const cookies = new Cookies()
-
-    try {
-        let res = await axios({
-            url: `${requestUrl}/`,
-            method: "GET",
-            headers: {
-                'Authorization': `Bearer ${cookies.get('authToken')}`
-            }
-        })
-
-        returnData = res.data
-    } catch (error) {
-        console.log(error)
-    }
-
-    return returnData
+    return getAll(requestUrl)
 }
 
 async function getAllActivitiesByUser(id) {
-    let returnData = null
-    const cookies = new Cookies()
-
-    try {
-        let res = await axios({
-            url: `${requestUrl}/${id}`,
-            method: "GET",
-            headers: {
-                'Authorization': `Bearer ${cookies.get('authToken')}`
-            }
-        })
-
-        returnData = res.data
-    } catch (error) {
-        console.log(error)
-    }
-
-    return returnData
+    return getById(requestUrl, id)
 }
 
 async function createActivity(activity) {
     let returnData = null
+    let errorMessage = null
     const cookies = new Cookies()
 
     try {
@@ -62,14 +30,15 @@ async function createActivity(activity) {
 
         returnData = res.data
     } catch (error) {
-        console.log(error)
+        errorMessage = error
     }
 
-    return returnData
+    return [returnData, errorMessage]
 }
 
 async function addChildActivity(activity, id) {
     let returnData = null
+    let errorMessage = null
     const cookies = new Cookies()
 
     try {
@@ -84,14 +53,15 @@ async function addChildActivity(activity, id) {
 
         returnData = res.data
     } catch (error) {
-        console.log(error)
+        errorMessage = error
     }
 
-    return returnData
+    return [returnData, errorMessage]
 }
 
 async function addActivityToUser(activityId, userId) {
     let returnData = null
+    let errorMessage = null
     const cookies = new Cookies()
 
     try {
@@ -105,14 +75,15 @@ async function addActivityToUser(activityId, userId) {
 
         returnData = res.data
     } catch (error) {
-        console.log(error)
+        errorMessage = error
     }
 
-    return returnData
+    return [returnData, errorMessage]
 }
 
 async function updateActivityStatus(updateActivityStatusForm) {
     let returnData = null
+    let errorMessage = null
     const cookies = new Cookies()
 
     try {
@@ -127,31 +98,14 @@ async function updateActivityStatus(updateActivityStatusForm) {
 
         returnData = res.data
     } catch (error) {
-        console.log(error)
+        errorMessage = error
     }
 
-    return returnData
+    return [returnData, errorMessage]
 }
 
 async function deleteActivity(id) {
-    let returnData = null
-    const cookies = new Cookies()
-
-    try {
-        let res = await axios({
-            url: `${requestUrl}/${id}`,
-            method: "DELETE",
-            headers: {
-                'Authorization': `Bearer ${cookies.get('authToken')}`
-            }
-        })
-
-        returnData = res.data
-    } catch (error) {
-        console.log(error)
-    }
-
-    return returnData
+    return deleteById(requestUrl, id)
 }
 
 export {getAllActivities, getAllActivitiesByUser, createActivity,

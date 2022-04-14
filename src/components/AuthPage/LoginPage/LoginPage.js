@@ -10,6 +10,7 @@ export const LoginPage = () => {
     const [isRemembered, setIsRemembered] = useState(false)
     const [showDanger, setShowDanger] = useState(false)
     const [showSpinner, setShowSpinner] = useState(false)
+    const [errorMsg, setErrorMsg] = useState('')
 
     let navigate = useNavigate();
 
@@ -23,8 +24,9 @@ export const LoginPage = () => {
             "password": password.current.trim()
         }
 
-        const token = await login(loginUser, isRemembered)
+        const [token, errorMessage] = await login(loginUser, isRemembered)
         if (token === null) {
+            setErrorMsg(errorMessage)
             setShowSpinner(false)
             setShowDanger(true)
             return
@@ -118,7 +120,7 @@ export const LoginPage = () => {
                     <Spinner />
                 )}
                 {showDanger && (
-                    <DangerAlert />
+                    <DangerAlert dangerMessage={errorMsg} />
                 )}
             </div>
         </div>
