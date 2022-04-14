@@ -1,12 +1,12 @@
 import {login} from "../../../api/authService";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {DangerAlert} from "../../alerts/DangerAlert";
 import {Spinner} from "../../spinner/Spinner";
 
 export const LoginPage = () => {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+    const username = useRef('')
+    const password = useRef('')
     const [isRemembered, setIsRemembered] = useState(false)
     const [showDanger, setShowDanger] = useState(false)
     const [showSpinner, setShowSpinner] = useState(false)
@@ -18,15 +18,20 @@ export const LoginPage = () => {
         if (showDanger) setShowDanger(false)
         setShowSpinner(true);
 
-        const token = await login({username, password}, isRemembered)
+        const loginUser = {
+            "username": username.current.trim(),
+            "password": password.current.trim()
+        }
+
+        const token = await login(loginUser, isRemembered)
         if (token === null) {
             setShowSpinner(false)
             setShowDanger(true)
             return
         }
 
-        setUsername('')
-        setPassword('')
+        username.current = ''
+        password.current = ''
         setIsRemembered(false)
 
         navigate("/profile", {replace: true})
@@ -55,7 +60,7 @@ export const LoginPage = () => {
                                 id="username"
                                 name="username"
                                 type="username"
-                                onChange={e => setUsername(e.target.value)}
+                                onChange={e => username.current = e.target.value}
                                 autoComplete="username"
                                 required
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-teal-accent-400 focus:border-teal-accent-400 focus:z-10 sm:text-sm"
@@ -70,7 +75,7 @@ export const LoginPage = () => {
                                 id="password"
                                 name="password"
                                 type="password"
-                                onChange={e => setPassword(e.target.value)}
+                                onChange={e => password.current = e.target.value}
                                 autoComplete="current-password"
                                 required
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-teal-accent-400 focus:border-teal-accent-400 focus:z-10 sm:text-sm"

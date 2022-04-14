@@ -1,15 +1,15 @@
 import {useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import {register} from "../../../api/authService";
 import {DangerAlert} from "../../alerts/DangerAlert";
 import {Spinner} from "../../spinner/Spinner";
 
 export const RegisterPage = () => {
-    const [name, setName] = useState('')
-    const [lastname, setLastname] = useState('')
-    const [username, setUsername] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const name = useRef('')
+    const lastname = useRef('')
+    const username = useRef('')
+    const email = useRef('')
+    const password = useRef('')
     const [showDanger, setShowDanger] = useState(false)
     const [showSpinner, setShowSpinner] = useState(false)
 
@@ -20,18 +20,27 @@ export const RegisterPage = () => {
         if (showDanger) setShowDanger(false)
         setShowSpinner(true);
 
-        const user = await register({name, lastname, username, email, password, "enabled": false })
-        if (user === null) {
+        const user = {
+            "name": name.current.trim(),
+            "lastname": lastname.current.trim(),
+            "username": username.current.trim(),
+            "email": email.current.trim(),
+            "password": password.current.trim(),
+            "enabled": false
+        }
+
+        const registerResponse = await register(user)
+        if (registerResponse === null) {
             setShowSpinner(false)
             setShowDanger(true)
             return
         }
 
-        setName('')
-        setLastname('')
-        setUsername('')
-        setEmail('')
-        setPassword('')
+        name.current = ''
+        lastname.current = ''
+        username.current = ''
+        email.current = ''
+        password.current = ''
 
         navigate("/login", {replace: true})
     }
@@ -58,7 +67,7 @@ export const RegisterPage = () => {
                                 id="name"
                                 name="name"
                                 type="text"
-                                onChange={e => setName(e.target.value)}
+                                onChange={e => name.current = e.target.value}
                                 autoComplete="name"
                                 required
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-teal-accent-400 focus:border-teal-accent-400 focus:z-10 sm:text-sm"
@@ -73,7 +82,7 @@ export const RegisterPage = () => {
                                 id="lastname"
                                 name="lastname"
                                 type="text"
-                                onChange={e => setLastname(e.target.value)}
+                                onChange={e => lastname.current = e.target.value}
                                 autoComplete="lastname"
                                 required
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-teal-accent-400 focus:border-teal-accent-400 focus:z-10 sm:text-sm"
@@ -88,7 +97,7 @@ export const RegisterPage = () => {
                                 id="username"
                                 name="username"
                                 type="text"
-                                onChange={e => setUsername(e.target.value)}
+                                onChange={e => username.current = e.target.value}
                                 autoComplete="username"
                                 required
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-teal-accent-400 focus:border-teal-accent-400 focus:z-10 sm:text-sm"
@@ -103,7 +112,7 @@ export const RegisterPage = () => {
                                 id="email"
                                 name="email"
                                 type="email"
-                                onChange={e => setEmail(e.target.value)}
+                                onChange={e => email.current = e.target.value}
                                 autoComplete="email"
                                 required
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-teal-accent-400 focus:border-teal-accent-400 focus:z-10 sm:text-sm"
@@ -118,7 +127,7 @@ export const RegisterPage = () => {
                                 id="password"
                                 name="password"
                                 type="password"
-                                onChange={e => setPassword(e.target.value)}
+                                onChange={e => password.current = e.target.value}
                                 autoComplete="current-password"
                                 required
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-teal-accent-400 focus:border-teal-accent-400 focus:z-10 sm:text-sm"
