@@ -121,7 +121,7 @@ export const ProfilePage = () => {
                                         Текущий пароль
                                     </label>
                                     <input
-                                        id="password"
+                                        id="current-password"
                                         name="password"
                                         type="password"
                                         // onChange={e => setPassword(e.target.value)}
@@ -136,7 +136,7 @@ export const ProfilePage = () => {
                                         Новый пароль
                                     </label>
                                     <input
-                                        id="password"
+                                        id="new-password"
                                         name="password"
                                         type="password"
                                         // onChange={e => setPassword(e.target.value)}

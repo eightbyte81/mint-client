@@ -36,7 +36,7 @@ export const LoginPage = () => {
         password.current = ''
         setIsRemembered(false)
 
-        navigate("/profile", {replace: true})
+        navigate("/", {replace: true})
         window.location.reload()
     }
 

@@ -15,14 +15,24 @@ import {NavBar} from "./components/NavBar/NavBar";
 import {LoginPage} from "./components/AuthPage/LoginPage/LoginPage";
 import {RegisterPage} from "./components/AuthPage/RegisterPage/RegisterPage";
 import {ManagementPage} from "./components/ManagementPage/ManagementPage";
+import {decodeJwt} from "jose";
 
 function App() {
     const cookies = new Cookies()
+    let roleArray = []
     const authValue = cookies.get('authToken') !== undefined || sessionStorage.getItem('authToken') !== null
+
+    if (authValue) {
+        const cookieAuthToken = cookies.get('authToken')
+        const sessionAuthToken = sessionStorage.getItem('authToken')
+
+        if (cookieAuthToken) roleArray = decodeJwt(cookieAuthToken).roles.split(',')
+        if (sessionAuthToken) roleArray = decodeJwt(sessionAuthToken).roles.split(',')
+    }
 
     return (
     <div className="App">
-        <AuthContext.Provider value={authValue}>
+        <AuthContext.Provider value={{authValue, roleArray}}>
             {/*<ApiTest />*/}
             <NavBar />
         <Routes>
@@ -34,8 +44,10 @@ function App() {
                     <Route path="/profile" element={<ProfilePage />} />
                 </>
             )}
-            {/*Check ROLE_LEAD or ROLE_ADMIN and add to NavBar*/}
-            <Route path="/management" element={<ManagementPage />} />
+            {(roleArray.includes("ROLE_LEAD") || roleArray.includes("ROLE_ADMIN")) && (
+                <Route path="/management" element={<ManagementPage />} />
+            )}
+
             {!authValue && (
                 <>
                     <Route path="/login" element={<LoginPage />} />

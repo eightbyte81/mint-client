@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 export const NavBar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const authValue = useContext(AuthContext)
+    const {authValue, roleArray} = useContext(AuthContext)
 
     return (
         <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
@@ -56,16 +56,18 @@ export const NavBar = () => {
                                     Профиль
                                 </Link>
                             </li>
-                            <li>
-                                <Link
-                                    to="/management"
-                                    aria-label="Управление"
-                                    title="Управление"
-                                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
-                                >
-                                    Управление
-                                </Link>
-                            </li>
+                            {(roleArray.includes("ROLE_LEAD") || roleArray.includes("ROLE_ADMIN")) && (
+                                <li>
+                                    <Link
+                                        to="/management"
+                                        aria-label="Управление"
+                                        title="Управление"
+                                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
+                                    >
+                                        Управление
+                                    </Link>
+                                </li>
+                            )}
                         </ul>
                     )}
                 </div>
