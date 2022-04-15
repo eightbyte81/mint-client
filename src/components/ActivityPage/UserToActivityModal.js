@@ -27,15 +27,28 @@ export const UserToActivityModal = ({handleModalButtons}) => {
                             placeholder="Фамилия Имя"
                         />
                     </div>
-                    <ul className="overflow-y-auto max-h-56 pt-3 px-8 space-y-6 text-left">
+                    <ul className="overflow-y-auto max-h-56 pt-3 px-8 space-y-2 text-left">
                         <li
-                            className="flex justify-start text-white my-2">
+                            className="flex justify-start text-white my-2 p-2 border rounded-md">
                             <input
                                 type="checkbox"
-                                className="h-6 w-4 text-indigo-600 focus:ring-teal-500 border-gray-300 rounded"
+                                className="h-10 w-4 cursor-pointer text-indigo-600 focus:ring-teal-500 border-gray-300"
                             />
-                            <div className="flex-grow font-medium px-2">Tighten Co.</div>
-                            <div className="text-sm font-normal text-gray-500 tracking-wide">Team</div>
+                            <img className="rounded-full ml-3 w-10 h-10" src="https://i1.sndcdn.com/artworks-000550908456-f1jqua-t500x500.jpg" alt="avatar" />
+                            <div className="m-2 ml-3">
+                                Валерий Жмышенко
+                            </div>
+                        </li>
+                        <li
+                            className="flex justify-start text-white my-2 p-2 border rounded-md">
+                            <input
+                                type="checkbox"
+                                className="h-10 w-4 cursor-pointer text-indigo-600 focus:ring-teal-500 border-gray-300"
+                            />
+                            <img className="rounded-full ml-3 w-10 h-10" src="https://i1.sndcdn.com/artworks-000550908456-f1jqua-t500x500.jpg" alt="avatar" />
+                            <div className="m-2 ml-3">
+                                Валерий Жмышенко
+                            </div>
                         </li>
                     </ul>
                     <div
