@@ -1,4 +1,24 @@
+import {useRef, useState} from "react";
+import {DangerAlert} from "../alerts/DangerAlert";
+
 export const ImageUploadModal = ({handleModalButtons}) => {
+    const imageUrl = useRef('')
+    const [showDanger, setShowDanger] = useState(false)
+
+    let invalidImgUrlMessage = {
+        "name": "InvalidImgUrl",
+        "message": "Неверная ссылка на изображение"
+    }
+
+    const handleImageUpload = () => {
+        if (showDanger) setShowDanger(false)
+
+        if (imageUrl.current
+            .match("(http(|s):\\/\\/)([^\\s([\"<,>/]*)(\\/)[^\\s[\",><]*(.png|.jpg|.jpeg)(\\?[^\\s[\",><]*)?") === null) {
+            setShowDanger(true)
+        }
+    }
+
     return (
         <div id="imageUploadModal" tabIndex="-1" aria-hidden="true"
              className="justify-center items-center flex overflow-y-auto overflow-x-hidden fixed z-50 w-full md:inset-0 h-modal md:h-full">
@@ -22,14 +42,20 @@ export const ImageUploadModal = ({handleModalButtons}) => {
                     </div>
                     <div className="p-6 space-y-6 text-left">
                         <input
+                            onChange={e => imageUrl.current = e.target.value}
                             className="text-base leading-relaxed rounded-md focus:outline-none text-gray-700 p-2 w-full"
                             placeholder="Введите URL изображения"
                         />
                     </div>
+                    <div className="px-3">
+                        {showDanger && (
+                            <DangerAlert dangerMessage={invalidImgUrlMessage} />
+                        )}
+                    </div>
                     <div
                         className="flex gap-2 flex-row-reverse p-6 rounded-b">
                         <button
-                            // onClick={_ => handleLogout()}
+                            onClick={_ => handleImageUpload()}
                             type="button"
                             className="text-white bg-teal-accent-700 hover:bg-teal-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                             Загрузить
