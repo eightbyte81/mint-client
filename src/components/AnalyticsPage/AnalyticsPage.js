@@ -1,73 +1,85 @@
 import {TeamMembers} from "./TeamMembers";
+import {useContext, useEffect, useState} from "react";
+import {AuthContext} from "../../context/AuthContext";
+import {getUserByUsername} from "../../api/userService";
+import {getTeamById} from "../../api/teamService";
+import {DangerAlert} from "../alerts/DangerAlert";
+import {Spinner} from "../spinner/Spinner";
+import {ActivityAnalytics} from "./ActivityAnalytics";
 
 export const AnalyticsPage = () => {
+    const {username} = useContext(AuthContext)
+    const [teamData, setTeamData] = useState({})
+    const [showDanger, setShowDanger] = useState(false)
+    const [showSpinner, setShowSpinner] = useState(false)
+    const [errorMsg, setErrorMsg] = useState(null)
+
+    useEffect(() => {
+        async function getTeamData() {
+            setShowSpinner(true)
+            const [returnUserData, errorUserMessage] = await getUserByUsername(username)
+
+            if (errorUserMessage) {
+                setErrorMsg(errorUserMessage)
+                setShowDanger(true)
+                setShowSpinner(false)
+                return
+            } else if (!returnUserData) {
+                setErrorMsg({"name": "UserNotFound", "message": `Пользователь ${username} не найден`})
+                setShowDanger(true)
+                setShowSpinner(false)
+                return
+            }
+
+            const [returnTeamData, errorTeamMessage] = await getTeamById(returnUserData["team"]["id"])
+
+            if (errorTeamMessage) {
+                setErrorMsg(errorTeamMessage)
+                setShowDanger(true)
+                setShowSpinner(false)
+                return
+            } else if (!returnUserData) {
+                setErrorMsg({"name": "TeamNotFound", "message": `Команда ${returnUserData["team"]["name"]} не найдена`})
+                setShowDanger(true)
+                setShowSpinner(false)
+                return
+            }
+
+            setTeamData(returnTeamData)
+            setShowSpinner(false)
+        }
+
+        getTeamData().then(_ => {})
+    }, [username])
+
     return (
         <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
-            <div className="grid gap-24 row-gap-8 lg:grid-cols-5">
-                <div className="grid gap-8 lg:col-span-2">
-                    <div>
-                        <p className="mb-2 text-lg font-bold">Название команды</p>
-                        <p className="text-gray-700">
-                            Аналитика поможет оценить продуктивность рабочего процесса
-                        </p>
+            {showDanger && (
+                <DangerAlert dangerMessage={errorMsg} />
+            )}
+            {showSpinner && (
+                <Spinner />
+            )}
+            {(!showSpinner && !showDanger) && (
+                <>
+                    <div className="grid gap-24 row-gap-8 lg:grid-cols-5">
+                        <div className="grid gap-8 lg:col-span-2">
+                            <div>
+                                <p className="mb-2 text-lg font-bold">{teamData["name"]}</p>
+                                <p className="text-gray-700">
+                                    {teamData["description"]}
+                                </p>
+                            </div>
+                        </div>
+                        {teamData !== {} && (
+                            <ActivityAnalytics teamMembers={teamData["members"]} />
+                        )}
                     </div>
-                </div>
-                <div className="grid border divide-y rounded lg:col-span-3 sm:grid-cols-2 sm:divide-y-0 sm:divide-x">
-                    <div className="flex flex-col justify-between p-10">
-                        <div className="p-5">
-                            <p className="text-lg font-semibold text-gray-800 sm:text-base">
-                                Общее количество задач
-                            </p>
-                            <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                                $84 000 000
-                            </p>
-                        </div>
-                        <div className="p-5">
-                            <p className="text-lg font-semibold text-gray-800 sm:text-base">
-                                Завершенные задачи
-                            </p>
-                            <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                                52
-                            </p>
-                        </div>
-                        <div className="p-5">
-                            <p className="text-lg font-semibold text-gray-800 sm:text-base">
-                                Завершенные задачи<br />за месяц
-                            </p>
-                            <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                                186M
-                            </p>
-                        </div>
-                    </div>
-                    <div className="flex flex-col justify-between p-10">
-                        <div className="p-5">
-                            <p className="text-lg font-semibold text-gray-800 sm:text-base">
-                                Количество задач<br />у команды
-                            </p>
-                            <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                                86K
-                            </p>
-                        </div>
-                        <div className="p-5">
-                            <p className="text-lg font-semibold text-gray-800 sm:text-base">
-                                Завершенные задачи<br />у команды
-                            </p>
-                            <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                                917 000
-                            </p>
-                        </div>
-                        <div className="p-5">
-                            <p className="text-lg font-semibold text-gray-800 sm:text-base">
-                                Завершенные задачи<br />у команды за месяц
-                            </p>
-                            <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                                213K
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <TeamMembers />
+                    {teamData !== {} && (
+                        <TeamMembers teamMembers={teamData["members"]} />
+                    )}
+                </>
+            )}
         </div>
     )
 }

@@ -58,6 +58,7 @@ export const ChangeUserPassword = ({userData}) => {
                             placeholder="Новый пароль"
                         />
                     </div>
+                    {/*TODO: Validate new password input*/}
                 </div>
                 <div>
                     {!showSpinner && (
