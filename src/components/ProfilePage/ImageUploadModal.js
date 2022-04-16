@@ -25,7 +25,9 @@ export const ImageUploadModal = ({handleModalButtons, userData}) => {
         }
 
         userData["photoUrl"] = imageUrl.current
-        await updateUser(userData) // TODO: handle error and fix password update
+        delete userData["password"]
+
+        await updateUser(userData) // TODO: handle error
         setShowSpinner(false)
 
         handleModalButtons(false)

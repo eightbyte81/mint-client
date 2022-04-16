@@ -13,8 +13,9 @@ export const ChangeUserData = ({userData}) => {
 
         userData["name"] = name.current
         userData["lastname"] = lastname.current
+        delete userData["password"]
 
-        await updateUser(userData) // TODO: handle error and fix password update
+        await updateUser(userData) // TODO: handle error
 
         name.current = ""
         lastname.current = ""
