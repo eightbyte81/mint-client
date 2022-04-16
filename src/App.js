@@ -42,27 +42,27 @@ function App() {
         <AuthContext.Provider value={{authValue, username, roleArray}}>
             {/*<ApiTest />*/}
             <NavBar />
-        <Routes>
-            <Route path="/" element={<MainPage />} />
-            {authValue && (
-                <>
-                    <Route path="/activities" element={<ActivityPage />} />
-                    <Route path="/analytics" element={<AnalyticsPage />} />
-                    <Route path="/profile" element={<ProfilePage />} />
-                </>
-            )}
-            {(roleArray.includes("ROLE_LEAD") || roleArray.includes("ROLE_ADMIN")) && (
-                <Route path="/management" element={<ManagementPage />} />
-            )}
+            <Routes>
+                <Route path="/" element={<MainPage />} />
+                {authValue && (
+                    <>
+                        <Route path="/activities" element={<ActivityPage />} />
+                        <Route path="/analytics" element={<AnalyticsPage />} />
+                        <Route path="/profile" element={<ProfilePage />} />
 
-            {!authValue && (
-                <>
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/register" element={<RegisterPage />} />
-                </>
-            )}
-            <Route path="*" element={<NotFoundPage />}/>
-        </Routes>
+                        (roleArray.includes("ROLE_LEAD") || roleArray.includes("ROLE_ADMIN")) && (
+                        <Route path="/management" element={<ManagementPage />} />
+                        )
+                    </>
+                )}
+                {!authValue && (
+                    <>
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/register" element={<RegisterPage />} />
+                    </>
+                )}
+                <Route path="*" element={<NotFoundPage />}/>
+            </Routes>
         </AuthContext.Provider>
     </div>
     );
