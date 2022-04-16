@@ -19,6 +19,7 @@ import {decodeJwt} from "jose";
 
 function App() {
     const cookies = new Cookies()
+    let username = ""
     let roleArray = []
     const authValue = cookies.get('authToken') !== undefined || sessionStorage.getItem('authToken') !== null
 
@@ -26,13 +27,19 @@ function App() {
         const cookieAuthToken = cookies.get('authToken')
         const sessionAuthToken = sessionStorage.getItem('authToken')
 
-        if (cookieAuthToken) roleArray = decodeJwt(cookieAuthToken).roles.split(',')
-        if (sessionAuthToken) roleArray = decodeJwt(sessionAuthToken).roles.split(',')
+        if (cookieAuthToken) {
+            roleArray = decodeJwt(cookieAuthToken).roles.split(',')
+            username = decodeJwt(cookieAuthToken).sub
+        }
+        if (sessionAuthToken) {
+            roleArray = decodeJwt(sessionAuthToken).roles.split(',')
+            username = decodeJwt(cookieAuthToken).sub
+        }
     }
 
     return (
     <div className="App">
-        <AuthContext.Provider value={{authValue, roleArray}}>
+        <AuthContext.Provider value={{authValue, username, roleArray}}>
             {/*<ApiTest />*/}
             <NavBar />
         <Routes>
