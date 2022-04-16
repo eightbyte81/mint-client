@@ -1,21 +1,32 @@
 import {useRef, useState} from "react";
 import {updateUser} from "../../api/userService";
 import {Spinner} from "../spinner/Spinner";
+import {DangerAlert} from "../alerts/DangerAlert";
 
 export const ChangeUserData = ({userData}) => {
     const name = useRef("")
     const lastname = useRef("")
     const [showSpinner, setShowSpinner] = useState(false)
+    const [showDanger, setShowDanger] = useState(false)
+    const [errorMsg, setErrorMsg] = useState(null)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        if (showDanger) setShowDanger(false)
         setShowSpinner(true)
 
-        userData["name"] = name.current
-        userData["lastname"] = lastname.current
+        userData["name"] = name.current.trim()
+        userData["lastname"] = lastname.current.trim()
         delete userData["password"]
 
-        await updateUser(userData) // TODO: handle error
+        const [, errorMessage] = await updateUser(userData)
+        if (errorMessage) {
+            setErrorMsg(errorMessage)
+            setShowSpinner(false)
+            setShowDanger(true)
+
+            return
+        }
 
         name.current = ""
         lastname.current = ""
@@ -27,7 +38,7 @@ export const ChangeUserData = ({userData}) => {
     return (
         <div className="pb-5">
             <div className="font-light text-2xl">Изменить данные</div>
-            <form className="mt-8 space-y-6 max-w-screen-sm">
+            <form className="mt-8 space-y-6" onSubmit={handleSubmit} method="POST">
                 <input type="hidden" name="remember" defaultValue="true" />
                 <div className="rounded-md shadow-sm -space-y-px">
                     <div className="pb-3">
@@ -65,7 +76,6 @@ export const ChangeUserData = ({userData}) => {
                     {!showSpinner && (
                         <button
                             type="submit"
-                            onClick={e => handleSubmit(e)}
                             className="group relative max-w-xs flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-teal-accent-400 hover:bg-teal-accent-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
                         >
                             Сохранить изменения
@@ -73,6 +83,11 @@ export const ChangeUserData = ({userData}) => {
                     )}
                     {showSpinner && (
                         <Spinner />
+                    )}
+                    {showDanger && (
+                        <div className="pt-2">
+                            <DangerAlert dangerMessage={errorMsg} />
+                        </div>
                     )}
                 </div>
             </form>

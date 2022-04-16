@@ -7,11 +7,7 @@ export const ImageUploadModal = ({handleModalButtons, userData}) => {
     const imageUrl = useRef('')
     const [showDanger, setShowDanger] = useState(false)
     const [showSpinner, setShowSpinner] = useState(false)
-
-    let invalidImgUrlMessage = {
-        "name": "InvalidImgUrl",
-        "message": "Неверная ссылка на изображение"
-    }
+    const [errorMsg, setErrorMsg] = useState(null)
 
     const handleImageUpload = async () => {
         if (showDanger) setShowDanger(false)
@@ -19,6 +15,10 @@ export const ImageUploadModal = ({handleModalButtons, userData}) => {
 
         if (imageUrl.current
             .match("(http(|s):\\/\\/)([^\\s([\"<,>/]*)(\\/)[^\\s[\",><]*(.png|.jpg|.jpeg)(\\?[^\\s[\",><]*)?") === null) {
+            setErrorMsg({
+                "name": "InvalidImgUrl",
+                "message": "Неверная ссылка на изображение"
+            })
             setShowDanger(true)
             setShowSpinner(false)
             return
@@ -27,9 +27,16 @@ export const ImageUploadModal = ({handleModalButtons, userData}) => {
         userData["photoUrl"] = imageUrl.current
         delete userData["password"]
 
-        await updateUser(userData) // TODO: handle error
-        setShowSpinner(false)
+        const [, errorMessage] = await updateUser(userData)
+        if (errorMessage) {
+            setErrorMsg(errorMessage)
+            setShowSpinner(false)
+            setShowDanger(true)
 
+            return
+        }
+
+        setShowSpinner(false)
         handleModalButtons(false)
     }
 
@@ -68,7 +75,7 @@ export const ImageUploadModal = ({handleModalButtons, userData}) => {
                     )}
                     {showDanger && (
                         <div className="px-3">
-                            <DangerAlert dangerMessage={invalidImgUrlMessage} />
+                            <DangerAlert dangerMessage={errorMsg} />
                         </div>
                     )}
                     <div

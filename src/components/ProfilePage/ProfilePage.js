@@ -93,7 +93,7 @@ export const ProfilePage = () => {
                     </div>
                     <div className="grid grid-cols-1">
                         <ChangeUserData userData={userData} />
-                        <ChangeUserPassword />
+                        <ChangeUserPassword userData={userData} />
                     </div>
                 </div>
             )}
