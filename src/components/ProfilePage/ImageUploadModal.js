@@ -1,22 +1,34 @@
 import {useRef, useState} from "react";
 import {DangerAlert} from "../alerts/DangerAlert";
+import {updateUser} from "../../api/userService";
+import {Spinner} from "../spinner/Spinner";
 
-export const ImageUploadModal = ({handleModalButtons}) => {
+export const ImageUploadModal = ({handleModalButtons, userData}) => {
     const imageUrl = useRef('')
     const [showDanger, setShowDanger] = useState(false)
+    const [showSpinner, setShowSpinner] = useState(false)
 
     let invalidImgUrlMessage = {
         "name": "InvalidImgUrl",
         "message": "Неверная ссылка на изображение"
     }
 
-    const handleImageUpload = () => {
+    const handleImageUpload = async () => {
         if (showDanger) setShowDanger(false)
+        setShowSpinner(true)
 
         if (imageUrl.current
             .match("(http(|s):\\/\\/)([^\\s([\"<,>/]*)(\\/)[^\\s[\",><]*(.png|.jpg|.jpeg)(\\?[^\\s[\",><]*)?") === null) {
             setShowDanger(true)
+            setShowSpinner(false)
+            return
         }
+
+        userData["photoUrl"] = imageUrl.current
+        await updateUser(userData) // TODO: handle error and fix password update
+        setShowSpinner(false)
+
+        handleModalButtons(false)
     }
 
     return (
@@ -47,11 +59,16 @@ export const ImageUploadModal = ({handleModalButtons}) => {
                             placeholder="Введите URL изображения"
                         />
                     </div>
-                    <div className="px-3">
-                        {showDanger && (
+                    {showSpinner && (
+                        <div className="px-3">
+                            <Spinner />
+                        </div>
+                    )}
+                    {showDanger && (
+                        <div className="px-3">
                             <DangerAlert dangerMessage={invalidImgUrlMessage} />
-                        )}
-                    </div>
+                        </div>
+                    )}
                     <div
                         className="flex gap-2 flex-row-reverse p-6 rounded-b">
                         <button

@@ -5,10 +5,13 @@ import {AuthContext} from "../../context/AuthContext";
 import {getUserByUsername} from "../../api/userService";
 import {DangerAlert} from "../alerts/DangerAlert";
 import {Spinner} from "../spinner/Spinner";
+import defaultAvatar from "../../assets/defaultAvatar.png"
+import {ChangeUserData} from "./ChangeUserData";
+import {ChangeUserPassword} from "./ChangeUserPassword";
 
 export const ProfilePage = () => {
     const {username, roleArray} = useContext(AuthContext)
-    const [userData, setUserData] = useState(null)
+    const [userData, setUserData] = useState({})
     const [logoutModal, setLogoutModal] = useState(false)
     const [imageUploadModal, setImageUploadModal] = useState(false)
     const [showDanger, setShowDanger] = useState(false)
@@ -59,22 +62,25 @@ export const ProfilePage = () => {
                     <div className="grid grid-cols-1 gap-4 max-w-screen-sm items-center text-left space-x-4 mb-5">
                         <div className="space-y-1 font-medium text-gray-800">
                             <button onClick={_ => setImageUploadModal(true)}>
-                                <img className="rounded w-56 h-56" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSK1mi4O2s4RYI03ohZ62KyBT3HRe69-xXNQ&usqp=CAU"
+                                <img className="rounded w-56 h-56" src={userData["photoUrl"] ? userData["photoUrl"] : defaultAvatar}
                                      alt="avatar"/>
                             </button>
 
                         </div>
                         <div className="space-y-1 font-medium text-gray-800">
-                            <div className="text-gray-400">Администратор</div>
-                            <div className="text-lg font-bold text-gray-800">AdminName AdminLastname</div>
+                            <div className="text-gray-400">
+                                {roleArray.includes("ROLE_ADMIN") ? "Администратор" :
+                                    roleArray.includes("ROLE_LEAD") ? "Глава команды" : "Пользователь"}
+                            </div>
+                            <div className="text-lg font-bold text-gray-800">{userData["name"]} {userData["lastname"]}</div>
                         </div>
                         <div className="mt-3 space-y-1 font-medium text-gray-800">
                             <div className="text-gray-400">Имя пользователя</div>
-                            <div className="text-lg">admin</div>
+                            <div className="text-lg">{userData["username"]}</div>
                         </div>
                         <div className="space-y-1 font-medium text-gray-800">
                             <div className="text-gray-400">Почта</div>
-                            <div className="text-lg">admin@admin.mint.ru</div>
+                            <div className="text-lg">{userData["email"]}</div>
                         </div>
                         <div className="pt-3">
                             <button type="button"
@@ -86,112 +92,8 @@ export const ProfilePage = () => {
                         </div>
                     </div>
                     <div className="grid grid-cols-1">
-                        <div className="pb-5">
-                            <div className="font-light text-2xl">Изменить данные</div>
-                            <form className="mt-8 space-y-6 max-w-screen-sm" method="POST">
-                                <input type="hidden" name="remember" defaultValue="true" />
-                                <div className="rounded-md shadow-sm -space-y-px">
-                                    <div className="pb-3">
-                                        <label htmlFor="name" className="sr-only">
-                                            Имя
-                                        </label>
-                                        <input
-                                            id="name"
-                                            name="name"
-                                            type="text"
-                                            // onChange={e => setName(e.target.value)}
-                                            autoComplete="name"
-                                            required
-                                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-teal-accent-400 focus:border-teal-accent-400 focus:z-10 sm:text-sm"
-                                            placeholder="Имя"
-                                        />
-                                    </div>
-                                    <div className="pb-3">
-                                        <label htmlFor="lastname" className="sr-only">
-                                            Фамилия
-                                        </label>
-                                        <input
-                                            id="lastname"
-                                            name="lastname"
-                                            type="text"
-                                            // onChange={e => setLastname(e.target.value)}
-                                            autoComplete="lastname"
-                                            required
-                                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-teal-accent-400 focus:border-teal-accent-400 focus:z-10 sm:text-sm"
-                                            placeholder="Фамилия"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label htmlFor="username" className="sr-only">
-                                            Имя пользователя
-                                        </label>
-                                        <input
-                                            id="username"
-                                            name="username"
-                                            type="text"
-                                            // onChange={e => setUsername(e.target.value)}
-                                            autoComplete="username"
-                                            required
-                                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 rounded-b-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-teal-accent-400 focus:border-teal-accent-400 focus:z-10 sm:text-sm"
-                                            placeholder="Имя пользователя"
-                                        />
-                                    </div>
-                                </div>
-                                <div>
-                                    <button
-                                        type="submit"
-                                        className="group relative max-w-xs flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-teal-accent-400 hover:bg-teal-accent-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-                                    >
-                                        Сохранить изменения
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                        <div>
-                            <div className="font-light text-2xl">Изменить пароль</div>
-                            <form className="mt-8 space-y-6 max-w-screen-sm" method="POST">
-                                <input type="hidden" name="remember" defaultValue="true" />
-                                <div className="rounded-md shadow-sm -space-y-px">
-                                    <div className="pb-3">
-                                        <label htmlFor="password" className="sr-only">
-                                            Текущий пароль
-                                        </label>
-                                        <input
-                                            id="current-password"
-                                            name="password"
-                                            type="password"
-                                            // onChange={e => setPassword(e.target.value)}
-                                            autoComplete="current-password"
-                                            required
-                                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-teal-accent-400 focus:border-teal-accent-400 focus:z-10 sm:text-sm"
-                                            placeholder="Текущий пароль"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label htmlFor="password" className="sr-only">
-                                            Новый пароль
-                                        </label>
-                                        <input
-                                            id="new-password"
-                                            name="password"
-                                            type="password"
-                                            // onChange={e => setPassword(e.target.value)}
-                                            required
-                                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-teal-accent-400 focus:border-teal-accent-400 focus:z-10 sm:text-sm"
-                                            placeholder="Новый пароль"
-                                        />
-                                    </div>
-                                </div>
-                                <div>
-                                    <button
-                                        type="submit"
-                                        className="group relative max-w-xs flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-teal-accent-400 hover:bg-teal-accent-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-                                    >
-                                        Сохранить изменения
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                        <ChangeUserData userData={userData} />
+                        <ChangeUserPassword />
                     </div>
                 </div>
             )}
@@ -199,7 +101,7 @@ export const ProfilePage = () => {
                 <LogoutModal handleModalButtons={handleLogoutModalButtons} />
             )}
             {imageUploadModal && (
-                <ImageUploadModal handleModalButtons={handleImageUploadModalButtons} />
+                <ImageUploadModal handleModalButtons={handleImageUploadModalButtons} userData={userData} />
             )}
         </div>
     )
