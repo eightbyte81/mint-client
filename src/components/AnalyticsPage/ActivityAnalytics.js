@@ -46,6 +46,17 @@ export const ActivityAnalytics = ({teamMembers}) => {
         setShowSpinner(false)
     }, [teamMembers])
 
+    const countApprovedActivities = () => {
+        if (activitiesData.size === 0) return null
+        let approvedCountValue = 0
+
+        activitiesData.forEach(activity => {
+            if (activity["closedAt"] !== null) approvedCountValue++
+        })
+
+        return approvedCountValue
+    }
+
     return (
         <div className="grid border divide-y rounded lg:col-span-3 sm:grid-cols-2 sm:divide-y-0 sm:divide-x">
             {showDanger && (
@@ -54,7 +65,7 @@ export const ActivityAnalytics = ({teamMembers}) => {
             {showSpinner && (
                 <Spinner />
             )}
-            {(!showSpinner && !showDanger && activitiesData !== []) && (
+            {(!showSpinner && !showDanger && activitiesData.size !== 0) && (
                 <>
                     <div className="flex flex-col justify-between p-10">
                         <div className="p-5">
@@ -62,7 +73,7 @@ export const ActivityAnalytics = ({teamMembers}) => {
                                 Общее количество задач
                             </p>
                             <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                                {activitiesData.size}
+                                42
                             </p>
                         </div>
                         <div className="p-5">
@@ -70,7 +81,7 @@ export const ActivityAnalytics = ({teamMembers}) => {
                                 Завершенные задачи
                             </p>
                             <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                                52
+                                54
                             </p>
                         </div>
                         <div className="p-5">
@@ -88,7 +99,7 @@ export const ActivityAnalytics = ({teamMembers}) => {
                                 Количество задач<br />у команды
                             </p>
                             <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                                86K
+                                {activitiesData.size}
                             </p>
                         </div>
                         <div className="p-5">
@@ -96,7 +107,7 @@ export const ActivityAnalytics = ({teamMembers}) => {
                                 Завершенные задачи<br />у команды
                             </p>
                             <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                                917 000
+                                {countApprovedActivities()}
                             </p>
                         </div>
                         <div className="p-5">
