@@ -1,11 +1,12 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {getAllActivitiesByUser} from "../../api/activityService";
 import {DangerAlert} from "../alerts/DangerAlert";
 import {Spinner} from "../spinner/Spinner";
+import {AuthContext} from "../../context/AuthContext";
 
 export const ActivityAnalytics = ({teamMembers}) => {
-    // TODO: получение данных о задачах, подсчет для вывода
     const [activitiesData, setActivitiesData] = useState(new Set())
+    const {username} = useContext(AuthContext)
     const [showDanger, setShowDanger] = useState(false)
     const [showSpinner, setShowSpinner] = useState(false)
     const [errorMsg, setErrorMsg] = useState(null)
@@ -46,12 +47,51 @@ export const ActivityAnalytics = ({teamMembers}) => {
         setShowSpinner(false)
     }, [teamMembers])
 
-    const countApprovedActivities = () => {
+    const countUserActivities = (approved = false, monthly = false) => {
         if (activitiesData.size === 0) return null
-        let approvedCountValue = 0
+        const userActivities = new Set()
 
         activitiesData.forEach(activity => {
-            if (activity["closedAt"] !== null) approvedCountValue++
+            if (activity["user"]["username"] === username) userActivities.add(activity)
+        })
+
+        if (approved) {
+            let approvedCountValue = 0
+            const monthAgoValue = new Date()
+            monthAgoValue.setMonth(monthAgoValue.getMonth() - 1)
+
+            userActivities.forEach(activity => {
+                if (activity["closedAt"] !== null) {
+                    if (monthly) {
+                        const closedAt = new Date(activity["closedAt"])
+                        if (closedAt > monthAgoValue) approvedCountValue++
+                    } else {
+                        approvedCountValue++
+                    }
+                }
+            })
+
+            return approvedCountValue
+        }
+
+        return userActivities.size
+    }
+
+    const countTeamApprovedActivities = (monthly = false) => {
+        if (activitiesData.size === 0) return null
+        let approvedCountValue = 0
+        const monthAgoValue = new Date()
+        monthAgoValue.setMonth(monthAgoValue.getMonth() - 1)
+
+        activitiesData.forEach(activity => {
+            if (activity["closedAt"] !== null) {
+                if (monthly) {
+                    const closedAt = new Date(activity["closedAt"])
+                    if (closedAt > monthAgoValue) approvedCountValue++
+                } else {
+                    approvedCountValue++
+                }
+            }
         })
 
         return approvedCountValue
@@ -73,7 +113,7 @@ export const ActivityAnalytics = ({teamMembers}) => {
                                 Общее количество задач
                             </p>
                             <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                                42
+                                {countUserActivities()}
                             </p>
                         </div>
                         <div className="p-5">
@@ -81,7 +121,7 @@ export const ActivityAnalytics = ({teamMembers}) => {
                                 Завершенные задачи
                             </p>
                             <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                                54
+                                {countUserActivities(true)}
                             </p>
                         </div>
                         <div className="p-5">
@@ -89,7 +129,7 @@ export const ActivityAnalytics = ({teamMembers}) => {
                                 Завершенные задачи<br />за месяц
                             </p>
                             <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                                186M
+                                {countUserActivities(true, true)}
                             </p>
                         </div>
                     </div>
@@ -107,7 +147,7 @@ export const ActivityAnalytics = ({teamMembers}) => {
                                 Завершенные задачи<br />у команды
                             </p>
                             <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                                {countApprovedActivities()}
+                                {countTeamApprovedActivities()}
                             </p>
                         </div>
                         <div className="p-5">
@@ -115,7 +155,7 @@ export const ActivityAnalytics = ({teamMembers}) => {
                                 Завершенные задачи<br />у команды за месяц
                             </p>
                             <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                                213K
+                                {countTeamApprovedActivities(true)}
                             </p>
                         </div>
                     </div>
