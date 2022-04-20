@@ -5,7 +5,7 @@ import {Spinner} from "../spinner/Spinner";
 
 export const ActivityAnalytics = ({teamMembers}) => {
     // TODO: получение данных о задачах, подсчет для вывода
-    const [activitiesData, setActivitiesData] = useState([])
+    const [activitiesData, setActivitiesData] = useState(new Set())
     const [showDanger, setShowDanger] = useState(false)
     const [showSpinner, setShowSpinner] = useState(false)
     const [errorMsg, setErrorMsg] = useState(null)
@@ -33,15 +33,15 @@ export const ActivityAnalytics = ({teamMembers}) => {
             return returnActivities
         }
 
-        teamMembers.forEach(member => {
-            getActivitiesById(member.id).then(activities => {
-                const storedActivities = activitiesData
-                storedActivities.forEach(storedActivity => activities = activities.filter(activity => activity.id !== storedActivity.id))
-                activities.forEach(activity => storedActivities.push(activity))
+        teamMembers.forEach(member => getActivitiesById(member.id).then(activities => {
+            const fetchedActivities = new Set()
 
-                setActivitiesData(storedActivities)
+            activities.forEach(activity => {
+                if (!fetchedActivities.has(activity)) fetchedActivities.add(activity)
             })
-        })
+
+            setActivitiesData(fetchedActivities)
+        }))
 
         setShowSpinner(false)
     }, [teamMembers])
@@ -54,58 +54,62 @@ export const ActivityAnalytics = ({teamMembers}) => {
             {showSpinner && (
                 <Spinner />
             )}
-            <div className="flex flex-col justify-between p-10">
-                <div className="p-5">
-                    <p className="text-lg font-semibold text-gray-800 sm:text-base">
-                        Общее количество задач
-                    </p>
-                    <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                        {activitiesData.length}
-                    </p>
-                </div>
-                <div className="p-5">
-                    <p className="text-lg font-semibold text-gray-800 sm:text-base">
-                        Завершенные задачи
-                    </p>
-                    <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                        52
-                    </p>
-                </div>
-                <div className="p-5">
-                    <p className="text-lg font-semibold text-gray-800 sm:text-base">
-                        Завершенные задачи<br />за месяц
-                    </p>
-                    <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                        186M
-                    </p>
-                </div>
-            </div>
-            <div className="flex flex-col justify-between p-10">
-                <div className="p-5">
-                    <p className="text-lg font-semibold text-gray-800 sm:text-base">
-                        Количество задач<br />у команды
-                    </p>
-                    <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                        86K
-                    </p>
-                </div>
-                <div className="p-5">
-                    <p className="text-lg font-semibold text-gray-800 sm:text-base">
-                        Завершенные задачи<br />у команды
-                    </p>
-                    <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                        917 000
-                    </p>
-                </div>
-                <div className="p-5">
-                    <p className="text-lg font-semibold text-gray-800 sm:text-base">
-                        Завершенные задачи<br />у команды за месяц
-                    </p>
-                    <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
-                        213K
-                    </p>
-                </div>
-            </div>
+            {(!showSpinner && !showDanger && activitiesData !== []) && (
+                <>
+                    <div className="flex flex-col justify-between p-10">
+                        <div className="p-5">
+                            <p className="text-lg font-semibold text-gray-800 sm:text-base">
+                                Общее количество задач
+                            </p>
+                            <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
+                                {activitiesData.size}
+                            </p>
+                        </div>
+                        <div className="p-5">
+                            <p className="text-lg font-semibold text-gray-800 sm:text-base">
+                                Завершенные задачи
+                            </p>
+                            <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
+                                52
+                            </p>
+                        </div>
+                        <div className="p-5">
+                            <p className="text-lg font-semibold text-gray-800 sm:text-base">
+                                Завершенные задачи<br />за месяц
+                            </p>
+                            <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
+                                186M
+                            </p>
+                        </div>
+                    </div>
+                    <div className="flex flex-col justify-between p-10">
+                        <div className="p-5">
+                            <p className="text-lg font-semibold text-gray-800 sm:text-base">
+                                Количество задач<br />у команды
+                            </p>
+                            <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
+                                86K
+                            </p>
+                        </div>
+                        <div className="p-5">
+                            <p className="text-lg font-semibold text-gray-800 sm:text-base">
+                                Завершенные задачи<br />у команды
+                            </p>
+                            <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
+                                917 000
+                            </p>
+                        </div>
+                        <div className="p-5">
+                            <p className="text-lg font-semibold text-gray-800 sm:text-base">
+                                Завершенные задачи<br />у команды за месяц
+                            </p>
+                            <p className="text-2xl font-bold text-deep-purple-accent-400 sm:text-xl">
+                                213K
+                            </p>
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     )
 }
