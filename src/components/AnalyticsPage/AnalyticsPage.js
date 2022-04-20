@@ -31,7 +31,11 @@ export const AnalyticsPage = () => {
                 return
             }
 
-            const [returnTeamData, errorTeamMessage] = await getTeamById(returnUserData["team"]["id"])
+            const [returnTeamData, errorTeamMessage] = (returnUserData["team"] !== null)
+                ?
+                await getTeamById(returnUserData["team"]["id"])
+                : [null, {"name": "TeamNotFound", "message": `Команда не найдена`}]
+
 
             if (errorTeamMessage) {
                 setErrorMsg(errorTeamMessage)
@@ -60,7 +64,7 @@ export const AnalyticsPage = () => {
             {showSpinner && (
                 <Spinner />
             )}
-            {(!showSpinner && !showDanger) && (
+            {(!showSpinner && !showDanger && teamData !== {}) && (
                 <>
                     <div className="grid gap-24 row-gap-8 lg:grid-cols-5">
                         <div className="grid gap-8 lg:col-span-2">
@@ -71,13 +75,9 @@ export const AnalyticsPage = () => {
                                 </p>
                             </div>
                         </div>
-                        {teamData !== {} && (
                             <ActivityAnalytics teamMembers={teamData["members"]} />
-                        )}
                     </div>
-                    {teamData !== {} && (
                         <TeamMembers teamMembers={teamData["members"]} />
-                    )}
                 </>
             )}
         </div>

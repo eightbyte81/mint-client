@@ -16,8 +16,8 @@ export const TeamMembers = ({teamMembers}) => {
                                 <p
                                     className="font-semibold text-gray-800 transition-colors duration-200 hover:text-deep-purple-accent-400"
                                 >
-                                    {member["roles"].includes("ROLE_ADMIN") ? "Администратор" :
-                                        member["roles"].includes("ROLE_LEAD") ? "Глава команды" : "Участник"}
+                                    {member["roles"].some(role => role.name === "ADMIN") ? "Администратор" :
+                                        member["roles"].some(role => role.name === "LEAD") ? "Глава команды" : "Участник"}
                                 </p>
                                 <div className="mt-3 flex inline-flex items-center">
                                     <a href="/" aria-label="Author" title="Author" className="mr-3">
