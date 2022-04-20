@@ -42,7 +42,7 @@ export const AnalyticsPage = () => {
                 setShowDanger(true)
                 setShowSpinner(false)
                 return
-            } else if (!returnUserData) {
+            } else if (!returnTeamData) {
                 setErrorMsg({"name": "TeamNotFound", "message": `Команда ${returnUserData["team"]["name"]} не найдена`})
                 setShowDanger(true)
                 setShowSpinner(false)

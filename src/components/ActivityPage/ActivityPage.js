@@ -103,7 +103,7 @@ export const ActivityPage = () => {
                         )}
                     </div>
                     {activityFormModal && (
-                        <ActivityFormModal handleModalButtons={handleActivityFormModalButtons} />
+                        <ActivityFormModal user={userData} handleModalButtons={handleActivityFormModalButtons} />
                     )}
                 </>
             )}

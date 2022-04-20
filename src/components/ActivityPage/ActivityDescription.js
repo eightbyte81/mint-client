@@ -34,6 +34,15 @@ export const ActivityDescription = ({activity}) => {
         window.location.reload()
     }
 
+    const getActivityLifetime = (createdAt) => {
+        const lifetime = Date.now() - new Date(createdAt)
+
+        if ((lifetime / 60000) < 60) return `${Math.floor(lifetime / 60000)} минут назад`
+        if ((lifetime / 3600000) < 24) return `${Math.floor(lifetime / 3600000)} часов назад`
+
+        return `${Math.floor(lifetime / 86400000)} дней назад`
+    }
+
     return (
         <div className="flex justify-center">
             <div className="block rounded-lg shadow-lg bg-white w-full text-center">
@@ -99,7 +108,7 @@ export const ActivityDescription = ({activity}) => {
                     </div>
                 </div>
                 <div className="py-3 px-6 border-t border-gray-300 text-gray-600">
-                    2 days ago
+                    {getActivityLifetime(activity["createdAt"])}
                 </div>
             </div>
             {userToActivityModal && (

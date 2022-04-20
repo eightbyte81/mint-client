@@ -1,9 +1,51 @@
-export const ActivityFormModal = ({handleModalButtons}) => {
+import {useRef, useState} from "react";
+import {Spinner} from "../spinner/Spinner";
+import {DangerAlert} from "../alerts/DangerAlert";
+import {addActivityToUser, createActivity} from "../../api/activityService";
+
+export const ActivityFormModal = ({user, handleModalButtons}) => {
+    const name = useRef("")
+    const description = useRef("")
+    const [showSpinner, setShowSpinner] = useState(false)
+    const [showDanger, setShowDanger] = useState(false)
+    const [errorMsg, setErrorMsg] = useState(null)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        if (showDanger) setShowDanger(false)
+        setShowSpinner(true)
+
+        const activity = {
+            "name": name.current.trim(),
+            "description": description.current.trim()
+        }
+
+        const [returnActivity, creationErrorMessage] = await createActivity(activity)
+
+        if (creationErrorMessage) {
+            setErrorMsg(creationErrorMessage)
+            setShowSpinner(false)
+            setShowDanger(true)
+        }
+
+        const [, addUserErrorMessage] = await addActivityToUser(returnActivity["id"], user["id"])
+
+        if (addUserErrorMessage) {
+            setErrorMsg(addUserErrorMessage)
+            setShowSpinner(false)
+            setShowDanger(true)
+        }
+
+        setShowSpinner(false)
+        handleModalButtons(false)
+        window.location.reload()
+    }
+
     return (
         <div id="activityFormModal" tabIndex="-1" aria-hidden="true"
              className="justify-center items-center flex overflow-y-auto overflow-x-hidden fixed z-50 w-full md:inset-0 h-modal md:h-full">
             <div className="relative p-4 w-full max-w-2xl h-full md:h-auto">
-                <div className="relative rounded-lg shadow bg-zinc-600">
+                <form className="relative rounded-lg shadow bg-zinc-600" onSubmit={handleSubmit} method="POST">
                     <div className="flex justify-between items-start p-5 rounded-t">
                         <h3 className="text-xl font-semibold text-deep-purple-50 lg:text-2xl">
                             Добавление задачи
@@ -22,24 +64,37 @@ export const ActivityFormModal = ({handleModalButtons}) => {
                     </div>
                     <div className="pt-3 px-6 space-y-6 text-left">
                         <input
+                            required
+                            onChange={e => name.current = e.target.value}
                             className="text-base leading-relaxed rounded-md focus:outline-none text-gray-700 p-2 w-full"
                             placeholder="Название"
                         />
                     </div>
                     <div className="pt-3 px-6 space-y-6 text-left">
                         <input
+                            required
+                            onChange={e => description.current = e.target.value}
                             className="text-base leading-relaxed rounded-md focus:outline-none text-gray-700 p-2 w-full"
                             placeholder="Описание"
                         />
                     </div>
+                    {showDanger && (
+                        <div className="pt-2">
+                            <DangerAlert dangerMessage={errorMsg} />
+                        </div>
+                    )}
                     <div
                         className="flex gap-2 flex-row-reverse p-6 rounded-b">
-                        <button
-                            // onClick={_ => handleLogout()}
-                            type="button"
-                            className="text-white bg-teal-accent-700 hover:bg-teal-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                            Добавить
-                        </button>
+                        {!showSpinner && (
+                            <button
+                                type="submit"
+                                className="text-white bg-teal-accent-700 hover:bg-teal-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                Добавить
+                            </button>
+                        )}
+                        {showSpinner && (
+                            <Spinner />
+                        )}
                         <button
                             onClick={_ => handleModalButtons(false)}
                             type="button"
@@ -48,7 +103,7 @@ export const ActivityFormModal = ({handleModalButtons}) => {
                             Отмена
                         </button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     )
