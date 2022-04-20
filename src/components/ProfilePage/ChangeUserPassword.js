@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 
 export const ChangeUserPassword = ({userData}) => {
     const newPassword = useRef("")
+    const checkNewPassword = useRef("")
     const [showSpinner, setShowSpinner] = useState(false)
     const [showDanger, setShowDanger] = useState(false)
     const [errorMsg, setErrorMsg] = useState(null)
@@ -16,6 +17,14 @@ export const ChangeUserPassword = ({userData}) => {
         e.preventDefault()
         if (showDanger) setShowDanger(false)
         setShowSpinner(true)
+
+        if (newPassword.current.trim() !== checkNewPassword.current.trim()) {
+            setErrorMsg({"name": "PasswordMismatchError", "message": "Ввведенные пароли не совпадают"})
+            setShowSpinner(false)
+            setShowDanger(true)
+
+            return
+        }
 
         userData["password"] = newPassword.current.trim()
 
@@ -29,6 +38,7 @@ export const ChangeUserPassword = ({userData}) => {
         }
 
         newPassword.current = ""
+        checkNewPassword.current = ""
         setShowSpinner(false)
 
         const cookie = new Cookies()
@@ -44,7 +54,7 @@ export const ChangeUserPassword = ({userData}) => {
             <form className="mt-8 space-y-6" onSubmit={handleSubmit} method="POST">
                 <input type="hidden" name="remember" defaultValue="true" />
                 <div className="rounded-md shadow-sm -space-y-px">
-                    <div>
+                    <div className="pb-3">
                         <label htmlFor="password" className="sr-only">
                             Новый пароль
                         </label>
@@ -54,11 +64,24 @@ export const ChangeUserPassword = ({userData}) => {
                             type="password"
                             onChange={e => newPassword.current = e.target.value}
                             required
-                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-teal-accent-400 focus:border-teal-accent-400 focus:z-10 sm:text-sm"
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-teal-accent-400 focus:border-teal-accent-400 focus:z-10 sm:text-sm"
                             placeholder="Новый пароль"
                         />
                     </div>
-                    {/*TODO: Validate new password input*/}
+                    <div>
+                        <label htmlFor="password" className="sr-only">
+                            Повторите новый пароль
+                        </label>
+                        <input
+                            id="new-password"
+                            name="password"
+                            type="password"
+                            onChange={e => checkNewPassword.current = e.target.value}
+                            required
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-teal-accent-400 focus:border-teal-accent-400 focus:z-10 sm:text-sm"
+                            placeholder="Повторите пароль"
+                        />
+                    </div>
                 </div>
                 <div>
                     {!showSpinner && (
