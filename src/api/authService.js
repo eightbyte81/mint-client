@@ -38,13 +38,12 @@ async function login(loginUser, isRemembered) {
 
         authToken = res.data
 
+        cookies.remove('authToken')
         if (isRemembered) {
-            sessionStorage.removeItem('authToken')
             const {exp} = decodeJwt(authToken['token'])
             cookies.set('authToken', authToken['token'], {expires: new Date(exp * 1000)})
         } else {
-            cookies.remove('authToken')
-            sessionStorage.setItem('authToken', authToken['token'])
+            cookies.set('authToken', authToken['token'])
         }
     } catch (error) {
         errorMessage = error

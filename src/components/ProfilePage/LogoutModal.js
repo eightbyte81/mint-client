@@ -9,7 +9,6 @@ export const LogoutModal = ({handleModalButtons}) => {
 
         const cookie = new Cookies()
         cookie.remove("authToken")
-        sessionStorage.removeItem("authToken")
         navigate("/", {replace: true})
         window.location.reload()
     }

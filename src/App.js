@@ -28,18 +28,13 @@ function App() {
     const cookies = new Cookies()
     let username = ""
     let roleArray = []
-    const authValue = cookies.get('authToken') !== undefined || sessionStorage.getItem('authToken') !== null
+    const authValue = cookies.get('authToken') !== undefined
 
     if (authValue) {
         const cookieAuthToken = cookies.get('authToken')
-        const sessionAuthToken = sessionStorage.getItem('authToken')
 
         if (cookieAuthToken) {
             roleArray = decodeJwt(cookieAuthToken).roles.split(',')
-            username = decodeJwt(cookieAuthToken).sub
-        }
-        if (sessionAuthToken) {
-            roleArray = decodeJwt(sessionAuthToken).roles.split(',')
             username = decodeJwt(cookieAuthToken).sub
         }
     }
