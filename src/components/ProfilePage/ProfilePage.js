@@ -2,12 +2,12 @@ import {useContext, useEffect, useState} from "react";
 import {LogoutModal} from "./LogoutModal";
 import {ImageUploadModal} from "./ImageUploadModal";
 import {AuthContext} from "../../context/AuthContext";
-import {getUserByUsername} from "../../api/userService";
 import {DangerAlert} from "../alerts/DangerAlert";
 import {Spinner} from "../spinner/Spinner";
 import defaultAvatar from "../../assets/defaultAvatar.png"
 import {ChangeUserData} from "./ChangeUserData";
 import {ChangeUserPassword} from "./ChangeUserPassword";
+import {fetchUser} from "../../api/fetch/fetchUser";
 
 export const ProfilePage = () => {
     const {username, roleArray} = useContext(AuthContext)
@@ -19,23 +19,15 @@ export const ProfilePage = () => {
     const [errorMsg, setErrorMsg] = useState(null)
 
     useEffect(() => {
-        async function getUserData() {
-            setShowSpinner(true)
-            const [returnData, errorMessage] = await getUserByUsername(username)
+        setShowSpinner(true)
 
-            if (errorMessage) {
-                setErrorMsg(errorMessage)
-                setShowDanger(true)
-            } else if (!returnData) {
-                setErrorMsg({"name": "UserNotFound", "message": `Пользователь ${username} не найден`})
-                setShowDanger(true)
-            }
+        fetchUser(username).then(res => {
+            setUserData(res["data"])
+            setErrorMsg(res["error"])
+            setShowDanger(res["danger"])
+        })
 
-            setUserData(returnData)
-            setShowSpinner(false)
-        }
-
-        getUserData().then(_ => {})
+        setShowSpinner(false)
     }, [username])
 
     let profilePageClasses = "grid grid-cols-2"

@@ -1,4 +1,4 @@
-import {login} from "../../../api/authService";
+import {login} from "../../../api/service/authService";
 import {useRef, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {DangerAlert} from "../../alerts/DangerAlert";

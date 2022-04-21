@@ -1,8 +1,8 @@
-import {register, login} from './authService'
-import {getAllUsers, getUserById, getUserByUsername, updateUser, updateUserRole, deleteUser} from "./userService"
+import {register, login} from './service/authService'
+import {getAllUsers, getUserById, getUserByUsername, updateUser, updateUserRole, deleteUser} from "./service/userService"
 import {getAllActivities, getAllActivitiesByUser, createActivity,
-    addChildActivity, addActivityToUser, updateActivityStatus, deleteActivity} from "./activityService"
-import {getAllTeams, getTeamById, addTeam, addUserToTeam, updateTeam, deleteTeam} from "./teamService"
+    addChildActivity, addActivityToUser, updateActivityStatus, deleteActivity} from "./service/activityService"
+import {getAllTeams, getTeamById, addTeam, addUserToTeam, updateTeam, deleteTeam} from "./service/teamService"
 
 function ApiTest() {
     const adminRegister = {

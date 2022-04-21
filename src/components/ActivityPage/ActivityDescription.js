@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {UserToActivityModal} from "./UserToActivityModal";
-import {updateActivityStatus} from "../../api/activityService";
+import {updateActivityStatus} from "../../api/service/activityService";
 import {DangerAlert} from "../alerts/DangerAlert";
 import {Spinner} from "../spinner/Spinner";
 

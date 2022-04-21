@@ -4,9 +4,10 @@ import {useContext, useEffect, useState} from "react";
 import {ActivityFormModal} from "./ActivityFormModal";
 import {DangerAlert} from "../alerts/DangerAlert";
 import {Spinner} from "../spinner/Spinner";
-import {getUserByUsername} from "../../api/userService";
 import {AuthContext} from "../../context/AuthContext";
-import {getAllActivitiesByUser} from "../../api/activityService";
+import {fetchUser} from "../../api/fetch/fetchUser";
+import {fetchTeam} from "../../api/fetch/fetchTeam";
+import {fetchTeamActivities} from "../../api/fetch/fetchTeamActivities";
 
 export const ActivityPage = () => {
     const {username, roleArray} = useContext(AuthContext)
@@ -22,45 +23,44 @@ export const ActivityPage = () => {
     if (activityFormModal) activityPageClasses += " opacity-25"
 
     useEffect(() => {
+        setShowSpinner(true)
+
         async function getActivitiesData() {
-            setShowSpinner(true)
+            const userRes = await fetchUser(username)
 
-            const [userData, errorUserMessage] = await getUserByUsername(username)
+            if (userRes["danger"]) {
+                setErrorMsg(userRes["error"])
+                setShowDanger(userRes["danger"])
 
-            if (errorUserMessage) {
-                setErrorMsg(errorUserMessage)
-                setShowDanger(true)
-                setShowSpinner(false)
-                return
-            } else if (!userData) {
-                setErrorMsg({"name": "UserNotFound", "message": `Пользователь ${username} не найден`})
-                setShowDanger(true)
-                setShowSpinner(false)
                 return
             }
 
-            setUserData(userData)
+            setUserData(userRes["data"])
 
-            const [activities, errorActivitiesMessage] =  await getAllActivitiesByUser(userData["id"])
+            const teamRes = await fetchTeam(userRes["data"])
 
-            if (errorActivitiesMessage) {
-                setErrorMsg(errorActivitiesMessage)
-                setShowDanger(true)
-                setShowSpinner(false)
-                return
-            } else if (!activities) {
-                setErrorMsg({"name": "ActivitiesNotFound", "message": `Задачи пользователя ${username} не найдены`})
-                setShowDanger(true)
-                setShowSpinner(false)
+            if (teamRes["danger"]) {
+                setErrorMsg(teamRes["error"])
+                setShowDanger(teamRes["danger"])
+
                 return
             }
 
-            setActivitiesData(new Set(activities))
+            const activityRes = await fetchTeamActivities(teamRes["data"]["members"])
 
-            setShowSpinner(false)
+            if (activityRes["danger"]) {
+                setErrorMsg(activityRes["error"])
+                setShowDanger(activityRes["danger"])
+
+                return
+            }
+
+            setActivitiesData(activityRes["data"])
         }
 
         getActivitiesData().then(_ => {})
+
+        setShowSpinner(false)
     }, [username])
 
     const handleActivityFormModalButtons = (value) => {
@@ -103,7 +103,7 @@ export const ActivityPage = () => {
                         )}
                     </div>
                     {activityFormModal && (
-                        <ActivityFormModal user={userData} handleModalButtons={handleActivityFormModalButtons} />
+                        <ActivityFormModal handleModalButtons={handleActivityFormModalButtons} />
                     )}
                 </>
             )}

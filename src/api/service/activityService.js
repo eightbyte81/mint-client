@@ -1,6 +1,6 @@
 import axios from "axios"
 import Cookies from "universal-cookie"
-import serverApiUrl from "./env"
+import serverApiUrl from "../env"
 import {deleteById, getAll, getById} from "./mainService";
 
 const requestUrl = `${serverApiUrl}/activity`

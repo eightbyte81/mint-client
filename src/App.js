@@ -18,13 +18,6 @@ import {ManagementPage} from "./components/ManagementPage/ManagementPage";
 import {decodeJwt} from "jose";
 
 function App() {
-    /*
-    TODO:
-        - ActivityAnalytics
-        - ActivityPage
-        - ManagementPage
-    */
-
     const cookies = new Cookies()
     let username = ""
     let roleArray = []

@@ -1,8 +1,8 @@
 import {useContext, useEffect, useState} from "react";
-import {getAllActivitiesByUser} from "../../api/activityService";
 import {DangerAlert} from "../alerts/DangerAlert";
 import {Spinner} from "../spinner/Spinner";
 import {AuthContext} from "../../context/AuthContext";
+import {fetchTeamActivities} from "../../api/fetch/fetchTeamActivities";
 
 export const ActivityAnalytics = ({teamMembers}) => {
     const [activitiesData, setActivitiesData] = useState(new Set())
@@ -16,33 +16,16 @@ export const ActivityAnalytics = ({teamMembers}) => {
 
         if (teamMembers === undefined) return
 
-        async function getActivitiesById(id) {
-            const [returnActivities, errMsg] = await getAllActivitiesByUser(id)
+        fetchTeamActivities(teamMembers).then(res => {
+            if (res["danger"]) {
+                setErrorMsg(res["error"])
+                setShowDanger(res["danger"])
 
-            if (errMsg) {
-                setErrorMsg(errMsg)
-                setShowDanger(true)
-                setShowSpinner(false)
-                return
-            } else if (!returnActivities) {
-                setErrorMsg({"name": "ActivitiesNotFound", "message": `Задачи пользователя ${id} не найдены`})
-                setShowDanger(true)
-                setShowSpinner(false)
                 return
             }
 
-            return returnActivities
-        }
-
-        teamMembers.forEach(member => getActivitiesById(member.id).then(activities => {
-            const fetchedActivities = new Set()
-
-            activities.forEach(activity => {
-                if (!fetchedActivities.has(activity)) fetchedActivities.add(activity)
-            })
-
-            setActivitiesData(fetchedActivities)
-        }))
+            setActivitiesData(res["data"])
+        })
 
         setShowSpinner(false)
     }, [teamMembers])

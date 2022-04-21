@@ -1,9 +1,10 @@
 import {useRef, useState} from "react";
 import {Spinner} from "../spinner/Spinner";
 import {DangerAlert} from "../alerts/DangerAlert";
-import {addActivityToUser, createActivity} from "../../api/activityService";
+import {addActivityToUser, createActivity} from "../../api/service/activityService";
 
-export const ActivityFormModal = ({user, handleModalButtons}) => {
+export const ActivityFormModal = ({handleModalButtons}) => {
+    // TODO: Выбор пользователя для задачи из списка
     const name = useRef("")
     const description = useRef("")
     const [showSpinner, setShowSpinner] = useState(false)
@@ -28,13 +29,13 @@ export const ActivityFormModal = ({user, handleModalButtons}) => {
             setShowDanger(true)
         }
 
-        const [, addUserErrorMessage] = await addActivityToUser(returnActivity["id"], user["id"])
-
-        if (addUserErrorMessage) {
-            setErrorMsg(addUserErrorMessage)
-            setShowSpinner(false)
-            setShowDanger(true)
-        }
+        // const [, addUserErrorMessage] = await addActivityToUser(returnActivity["id"], user["id"])
+        //
+        // if (addUserErrorMessage) {
+        //     setErrorMsg(addUserErrorMessage)
+        //     setShowSpinner(false)
+        //     setShowDanger(true)
+        // }
 
         setShowSpinner(false)
         handleModalButtons(false)

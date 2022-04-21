@@ -1,5 +1,5 @@
 import {useRef, useState} from "react";
-import {updateUser} from "../../api/userService";
+import {updateUser} from "../../api/service/userService";
 import {Spinner} from "../spinner/Spinner";
 import {DangerAlert} from "../alerts/DangerAlert";
 

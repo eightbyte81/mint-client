@@ -1,7 +1,7 @@
 import {useRef, useState} from "react";
 import {Spinner} from "../spinner/Spinner";
 import {DangerAlert} from "../alerts/DangerAlert";
-import {updateUser} from "../../api/userService";
+import {updateUser} from "../../api/service/userService";
 import Cookies from "universal-cookie";
 import {useNavigate} from "react-router-dom";
 

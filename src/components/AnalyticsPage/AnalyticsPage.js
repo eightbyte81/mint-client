@@ -1,11 +1,11 @@
 import {TeamMembers} from "./TeamMembers";
 import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../context/AuthContext";
-import {getUserByUsername} from "../../api/userService";
-import {getTeamById} from "../../api/teamService";
 import {DangerAlert} from "../alerts/DangerAlert";
 import {Spinner} from "../spinner/Spinner";
 import {ActivityAnalytics} from "./ActivityAnalytics";
+import {fetchUser} from "../../api/fetch/fetchUser";
+import {fetchTeam} from "../../api/fetch/fetchTeam";
 
 export const AnalyticsPage = () => {
     const {username} = useContext(AuthContext)
@@ -15,45 +15,30 @@ export const AnalyticsPage = () => {
     const [errorMsg, setErrorMsg] = useState(null)
 
     useEffect(() => {
+        setShowSpinner(true)
         async function getTeamData() {
-            setShowSpinner(true)
-            const [returnUserData, errorUserMessage] = await getUserByUsername(username)
+            const userRes = await fetchUser(username)
+            if (userRes["danger"]) {
+                setErrorMsg(userRes["error"])
+                setShowDanger(userRes["danger"])
 
-            if (errorUserMessage) {
-                setErrorMsg(errorUserMessage)
-                setShowDanger(true)
-                setShowSpinner(false)
-                return
-            } else if (!returnUserData) {
-                setErrorMsg({"name": "UserNotFound", "message": `Пользователь ${username} не найден`})
-                setShowDanger(true)
-                setShowSpinner(false)
                 return
             }
 
-            const [returnTeamData, errorTeamMessage] = (returnUserData["team"] !== null)
-                ?
-                await getTeamById(returnUserData["team"]["id"])
-                : [null, {"name": "TeamNotFound", "message": `Команда не найдена`}]
+            const teamRes = await fetchTeam(userRes["data"])
+            if (teamRes["danger"]) {
+                setErrorMsg(teamRes["error"])
+                setShowDanger(teamRes["danger"])
 
-
-            if (errorTeamMessage) {
-                setErrorMsg(errorTeamMessage)
-                setShowDanger(true)
-                setShowSpinner(false)
-                return
-            } else if (!returnTeamData) {
-                setErrorMsg({"name": "TeamNotFound", "message": `Команда ${returnUserData["team"]["name"]} не найдена`})
-                setShowDanger(true)
-                setShowSpinner(false)
                 return
             }
 
-            setTeamData(returnTeamData)
-            setShowSpinner(false)
+            setTeamData(teamRes["data"])
         }
 
         getTeamData().then(_ => {})
+
+        setShowSpinner(false)
     }, [username])
 
     return (

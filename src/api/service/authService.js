@@ -1,7 +1,7 @@
 import axios from "axios"
 import Cookies from "universal-cookie"
 import {decodeJwt} from "jose"
-import serverApiUrl from "./env"
+import serverApiUrl from "../env"
 
 const requestUrl = `${serverApiUrl}/auth`
 

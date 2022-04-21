@@ -1,31 +1,33 @@
 import axios from "axios"
 import Cookies from "universal-cookie"
-import serverApiUrl from "./env"
+import serverApiUrl from "../env"
 import {deleteById, getAll, getById} from "./mainService";
 
-const requestUrl = `${serverApiUrl}/team`
+const requestUrl = `${serverApiUrl}/user`
 
-async function getAllTeams() {
+async function getAllUsers() {
     return getAll(requestUrl)
 }
 
-async function getTeamById(id) {
+async function getUserById(id) {
     return getById(requestUrl, id)
 }
 
-async function addTeam(team) {
+async function getUserByUsername(username) {
     let returnData = null
     let errorMessage = null
     const cookies = new Cookies()
 
     try {
         let res = await axios({
-            url: `${requestUrl}/`,
-            method: "POST",
+            url: `${requestUrl}/find-by-username`,
+            method: "GET",
             headers: {
                 'Authorization': `Bearer ${cookies.get('authToken')}`
             },
-            data: team
+            params: {
+                "username": username
+            }
         })
 
         returnData = res.data
@@ -36,30 +38,7 @@ async function addTeam(team) {
     return [returnData, errorMessage]
 }
 
-async function addUserToTeam(userToTeamForm) {
-    let returnData = null
-    let errorMessage = null
-    const cookies = new Cookies()
-
-    try {
-        let res = await axios({
-            url: `${requestUrl}/add-user-to-team`,
-            method: "POST",
-            headers: {
-                'Authorization': `Bearer ${cookies.get('authToken')}`
-            },
-            data: userToTeamForm
-        })
-
-        returnData = res.data
-    } catch (error) {
-        errorMessage = error
-    }
-
-    return [returnData, errorMessage]
-}
-
-async function updateTeam(team) {
+async function updateUser(user) {
     let returnData = null
     let errorMessage = null
     const cookies = new Cookies()
@@ -71,7 +50,7 @@ async function updateTeam(team) {
             headers: {
                 'Authorization': `Bearer ${cookies.get('authToken')}`
             },
-            data: team
+            data: user
         })
 
         returnData = res.data
@@ -82,8 +61,31 @@ async function updateTeam(team) {
     return [returnData, errorMessage]
 }
 
-async function deleteTeam(id) {
+async function updateUserRole(changeRoleForm, id) {
+    let returnData = null
+    let errorMessage = null
+    const cookies = new Cookies()
+
+    try {
+        let res = await axios({
+            url: `${requestUrl}/${id}`,
+            method: "PUT",
+            headers: {
+                'Authorization': `Bearer ${cookies.get('authToken')}`
+            },
+            data: changeRoleForm
+        })
+
+        returnData = res.data
+    } catch (error) {
+        errorMessage = error
+    }
+
+    return [returnData, errorMessage]
+}
+
+async function deleteUser(id) {
     return deleteById(requestUrl, id)
 }
 
-export {getAllTeams, getTeamById, addTeam, addUserToTeam, updateTeam, deleteTeam}
+export {getAllUsers, getUserById, getUserByUsername, updateUser, updateUserRole, deleteUser}

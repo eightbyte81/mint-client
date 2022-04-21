@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {useRef, useState} from "react";
-import {register} from "../../../api/authService";
+import {register} from "../../../api/service/authService";
 import {DangerAlert} from "../../alerts/DangerAlert";
 import {Spinner} from "../../spinner/Spinner";
 
