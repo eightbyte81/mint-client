@@ -1,18 +1,12 @@
 import React, {useState} from "react";
-import {UserToActivityModal} from "./UserToActivityModal";
 import {updateActivityStatus} from "../../api/service/activityService";
 import {DangerAlert} from "../alerts/DangerAlert";
 import {Spinner} from "../spinner/Spinner";
 
 export const ActivityDescription = ({activity}) => {
-    const [userToActivityModal, setUserToActivityModal] = useState(false)
     const [showDanger, setShowDanger] = useState(false)
     const [showSpinner, setShowSpinner] = useState(false)
     const [errorMsg, setErrorMsg] = useState(null)
-
-    const handleUserToActivityModalButtons = (value) => {
-        setUserToActivityModal(value)
-    }
 
     const changeStatus = async (status) => {
         if (showDanger) setShowDanger(false)
@@ -84,15 +78,6 @@ export const ActivityDescription = ({activity}) => {
                         <div className="text-left text-base text-gray-800 m-3">
                             Ответственный:
                         </div>
-                        {activity["user"] === null && (
-                            <button className="mr-3 border-2 rounded-md hover:border-deep-purple-accent-700"
-                                    onClick={_ => handleUserToActivityModalButtons(true)}
-                            >
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                </svg>
-                            </button>
-                        )}
                         {activity["user"] !== null && (
                             <ul className="flex flex-col max-w-fit">
                                 <li className="inline-flex pb-1.5">
@@ -111,9 +96,6 @@ export const ActivityDescription = ({activity}) => {
                     {getActivityLifetime(activity["createdAt"])}
                 </div>
             </div>
-            {userToActivityModal && (
-                <UserToActivityModal handleModalButtons={handleUserToActivityModalButtons} />
-            )}
         </div>
     )
 }

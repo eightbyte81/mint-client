@@ -1,17 +1,22 @@
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Spinner} from "../spinner/Spinner";
 import {DangerAlert} from "../alerts/DangerAlert";
 import {addActivityToUser, createActivity} from "../../api/service/activityService";
 
 export const ActivityFormModal = ({teamMembers, handleModalButtons}) => {
-    // TODO: Выбор пользователя для задачи из списка
     const name = useRef("")
     const description = useRef("")
     const [showSpinner, setShowSpinner] = useState(false)
     const [showDanger, setShowDanger] = useState(false)
     const [errorMsg, setErrorMsg] = useState(null)
 
-    const [members, setMembers] = useState(teamMembers)
+    const [members, setMembers] = useState([])
+    
+    useEffect(() => {
+        const membersWithCheckbox = teamMembers.map(member => Object.assign(member, {"checked": false}))
+        
+        setMembers(membersWithCheckbox)
+    }, [teamMembers])
 
     const handleSearch = e => {
         const filteredMembers = teamMembers.filter(member =>
@@ -19,6 +24,18 @@ export const ActivityFormModal = ({teamMembers, handleModalButtons}) => {
         )
 
         setMembers(filteredMembers)
+    }
+
+    const handleCheck = (e, id) => {
+        const checkedMembers = members.map(member => {
+            if (e.target.checked) {
+                return member.id === id ? {...member, "checked": e.target.checked} : {...member, "checked": false}
+            } else {
+                return member.id === id ? {...member, "checked": e.target.checked} : member
+            }
+        })
+
+        setMembers(checkedMembers)
     }
 
     const handleSubmit = async (e) => {
@@ -37,15 +54,29 @@ export const ActivityFormModal = ({teamMembers, handleModalButtons}) => {
             setErrorMsg(creationErrorMessage)
             setShowSpinner(false)
             setShowDanger(true)
+
+            return
         }
 
-        // const [, addUserErrorMessage] = await addActivityToUser(returnActivity["id"], user["id"])
-        //
-        // if (addUserErrorMessage) {
-        //     setErrorMsg(addUserErrorMessage)
-        //     setShowSpinner(false)
-        //     setShowDanger(true)
-        // }
+        let [checkedUser] = members.filter(member => member["checked"] === true)
+
+        if (checkedUser === undefined) {
+            setErrorMsg({"name": "CheckedUserError", "message": "Не выбран пользователь, исполняющий задачу"})
+            setShowSpinner(false)
+            setShowDanger(true)
+
+            return
+        }
+
+        const [, addUserErrorMessage] = await addActivityToUser(returnActivity["id"], checkedUser["id"])
+
+        if (addUserErrorMessage) {
+            setErrorMsg(addUserErrorMessage)
+            setShowSpinner(false)
+            setShowDanger(true)
+
+            return
+        }
 
         setShowSpinner(false)
         handleModalButtons(false)
@@ -103,6 +134,8 @@ export const ActivityFormModal = ({teamMembers, handleModalButtons}) => {
                                         className="flex justify-start text-white my-2 p-2 border rounded-md">
                                         <input
                                             type="checkbox"
+                                            checked={member["checked"]}
+                                            onChange={e => handleCheck(e, member["id"])}
                                             className="h-10 w-4 cursor-pointer text-indigo-600 focus:ring-teal-500 border-gray-300"
                                         />
                                         <img className="rounded-full ml-3 w-10 h-10" src="https://i1.sndcdn.com/artworks-000550908456-f1jqua-t500x500.jpg" alt="avatar" />
