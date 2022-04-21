@@ -4,8 +4,7 @@ import {AuthContext} from "../../context/AuthContext";
 import {DangerAlert} from "../alerts/DangerAlert";
 import {Spinner} from "../spinner/Spinner";
 import {ActivityAnalytics} from "./ActivityAnalytics";
-import {fetchUser} from "../../api/fetch/fetchUser";
-import {fetchTeam} from "../../api/fetch/fetchTeam";
+import {fetchUserTeam} from "../../api/fetch/fetchUserTeam";
 
 export const AnalyticsPage = () => {
     const {username} = useContext(AuthContext)
@@ -16,27 +15,17 @@ export const AnalyticsPage = () => {
 
     useEffect(() => {
         setShowSpinner(true)
-        async function getTeamData() {
-            const userRes = await fetchUser(username)
-            if (userRes["danger"]) {
-                setErrorMsg(userRes["error"])
-                setShowDanger(userRes["danger"])
+
+        fetchUserTeam(username).then(res => {
+            if (res["danger"]) {
+                setErrorMsg(res["error"])
+                setShowDanger(res["danger"])
 
                 return
             }
 
-            const teamRes = await fetchTeam(userRes["data"])
-            if (teamRes["danger"]) {
-                setErrorMsg(teamRes["error"])
-                setShowDanger(teamRes["danger"])
-
-                return
-            }
-
-            setTeamData(teamRes["data"])
-        }
-
-        getTeamData().then(_ => {})
+            setTeamData(res["team"])
+        })
 
         setShowSpinner(false)
     }, [username])

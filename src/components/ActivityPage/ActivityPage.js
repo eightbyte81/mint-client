@@ -5,13 +5,12 @@ import {ActivityFormModal} from "./ActivityFormModal";
 import {DangerAlert} from "../alerts/DangerAlert";
 import {Spinner} from "../spinner/Spinner";
 import {AuthContext} from "../../context/AuthContext";
-import {fetchUser} from "../../api/fetch/fetchUser";
-import {fetchTeam} from "../../api/fetch/fetchTeam";
 import {fetchTeamActivities} from "../../api/fetch/fetchTeamActivities";
+import {fetchUserTeam} from "../../api/fetch/fetchUserTeam";
 
 export const ActivityPage = () => {
     const {username, roleArray} = useContext(AuthContext)
-    const [userData, setUserData] = useState({})
+    const [teamData, setTeamData] = useState({})
     const [activitiesData, setActivitiesData] = useState(new Set())
     const [activityFormModal, setActivityFormModal] = useState(false)
     const [activityDescriptionData, setActivityDescriptionData] = useState({"show": false, "activity": null})
@@ -26,27 +25,18 @@ export const ActivityPage = () => {
         setShowSpinner(true)
 
         async function getActivitiesData() {
-            const userRes = await fetchUser(username)
+            const userTeamRes = await fetchUserTeam(username)
 
-            if (userRes["danger"]) {
-                setErrorMsg(userRes["error"])
-                setShowDanger(userRes["danger"])
-
-                return
-            }
-
-            setUserData(userRes["data"])
-
-            const teamRes = await fetchTeam(userRes["data"])
-
-            if (teamRes["danger"]) {
-                setErrorMsg(teamRes["error"])
-                setShowDanger(teamRes["danger"])
+            if (userTeamRes["danger"]) {
+                setErrorMsg(userTeamRes["error"])
+                setShowDanger(userTeamRes["danger"])
 
                 return
             }
 
-            const activityRes = await fetchTeamActivities(teamRes["data"]["members"])
+            setTeamData(userTeamRes["team"])
+
+            const activityRes = await fetchTeamActivities(userTeamRes["team"]["members"])
 
             if (activityRes["danger"]) {
                 setErrorMsg(activityRes["error"])
@@ -79,12 +69,12 @@ export const ActivityPage = () => {
             {showSpinner && (
                 <Spinner />
             )}
-            {(!showSpinner && !showDanger && activitiesData.size !== 0 && userData !== {}) && (
+            {(!showSpinner && !showDanger && activitiesData.size !== 0 && teamData !== {}) && (
                 <>
                     <div className={activityPageClasses}>
                         <div>
                             <div className="text-left text-lg font-bold text-gray-800 ml-3 mb-3">
-                                {userData["team"]["name"]}
+                                {teamData["name"]}
                                 {(roleArray.includes("ROLE_LEAD") || roleArray.includes("ROLE_ADMIN")) && (
                                     <button className="ml-3 border-2 rounded-md hover:border-deep-purple-accent-700"
                                             onClick={_ => handleActivityFormModalButtons(true)}
@@ -103,7 +93,7 @@ export const ActivityPage = () => {
                         )}
                     </div>
                     {activityFormModal && (
-                        <ActivityFormModal handleModalButtons={handleActivityFormModalButtons} />
+                        <ActivityFormModal teamMembers={teamData["members"]} handleModalButtons={handleActivityFormModalButtons} />
                     )}
                 </>
             )}

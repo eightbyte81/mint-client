@@ -3,13 +3,23 @@ import {Spinner} from "../spinner/Spinner";
 import {DangerAlert} from "../alerts/DangerAlert";
 import {addActivityToUser, createActivity} from "../../api/service/activityService";
 
-export const ActivityFormModal = ({handleModalButtons}) => {
+export const ActivityFormModal = ({teamMembers, handleModalButtons}) => {
     // TODO: Выбор пользователя для задачи из списка
     const name = useRef("")
     const description = useRef("")
     const [showSpinner, setShowSpinner] = useState(false)
     const [showDanger, setShowDanger] = useState(false)
     const [errorMsg, setErrorMsg] = useState(null)
+
+    const [members, setMembers] = useState(teamMembers)
+
+    const handleSearch = e => {
+        const filteredMembers = teamMembers.filter(member =>
+            `${member["name"]} ${member["lastname"]}`.toLowerCase().includes(e.target.value.toLowerCase())
+        )
+
+        setMembers(filteredMembers)
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -78,6 +88,39 @@ export const ActivityFormModal = ({handleModalButtons}) => {
                             className="text-base leading-relaxed rounded-md focus:outline-none text-gray-700 p-2 w-full"
                             placeholder="Описание"
                         />
+                    </div>
+                    <div>
+                        <div className="pt-3 px-6 text-left">
+                            <input
+                                onChange={handleSearch}
+                                className="text-base leading-relaxed rounded-md focus:outline-none text-gray-700 p-2 w-full"
+                                placeholder="Фамилия Имя"
+                            />
+                            <ul className="overflow-y-auto max-h-56 pt-3 px-8 space-y-2 text-left">
+                                {members.length !== 0 && members.map(member => (
+                                    <li
+                                        key={member["id"]}
+                                        className="flex justify-start text-white my-2 p-2 border rounded-md">
+                                        <input
+                                            type="checkbox"
+                                            className="h-10 w-4 cursor-pointer text-indigo-600 focus:ring-teal-500 border-gray-300"
+                                        />
+                                        <img className="rounded-full ml-3 w-10 h-10" src="https://i1.sndcdn.com/artworks-000550908456-f1jqua-t500x500.jpg" alt="avatar" />
+                                        <div className="m-2 ml-3">
+                                            {member["name"]} {member["lastname"]}
+                                        </div>
+                                    </li>
+                                ))}
+                                {members.length === 0 && (
+                                    <li
+                                        className="flex justify-start text-white my-2 p-2 border rounded-md">
+                                        <div className="m-2 ml-3">
+                                            Пользователь не найден
+                                        </div>
+                                    </li>
+                                )}
+                            </ul>
+                        </div>
                     </div>
                     {showDanger && (
                         <div className="pt-2">

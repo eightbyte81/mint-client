@@ -3,10 +3,10 @@ import React from "react";
 export const ActivitiesList = ({activities, handleActivityDescriptionOpen}) => {
     return (
         <ul className="flex flex-col items-center lg:flex">
-            {[...activities].map((activity, id) => {
-                if (activity["parentActivity"] !== null) return (<div key={id}></div>)
+            {[...activities].map(activity => {
+                if (activity["parentActivity"] !== null) return (<div key={activity.id}></div>)
                 return (
-                    <React.Fragment key={id}>
+                    <React.Fragment key={activity.id}>
                         <button
                             onClick={_ => handleActivityDescriptionOpen(true, activity)}
                             className="flex justify-between items-center p-3 w-full font-medium text-left border-2 border-gray-200">
@@ -29,10 +29,10 @@ export const ActivitiesList = ({activities, handleActivityDescriptionOpen}) => {
                                 )}
                             </div>
                         </button>
-                        {activity["childActivities"].map((childActivity, id) => (
+                        {activity["childActivities"].map(childActivity => (
                             <button
                                 onClick={_ => handleActivityDescriptionOpen(true, childActivity)}
-                                key={id} className="flex justify-between items-center p-3 w-full font-medium text-left border-2 border-gray-200">
+                                key={childActivity.id} className="flex justify-between items-center p-3 w-full font-medium text-left border-2 border-gray-200">
                                 <div className="inline-flex">
                                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
