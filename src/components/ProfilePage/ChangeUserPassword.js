@@ -73,7 +73,7 @@ export const ChangeUserPassword = ({userData}) => {
                             Повторите новый пароль
                         </label>
                         <input
-                            id="new-password"
+                            id="check-new-password"
                             name="password"
                             type="password"
                             onChange={e => checkNewPassword.current = e.target.value}

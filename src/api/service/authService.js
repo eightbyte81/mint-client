@@ -41,7 +41,7 @@ async function login(loginUser, isRemembered) {
         cookies.remove('authToken')
         if (isRemembered) {
             const {exp} = decodeJwt(authToken['token'])
-            cookies.set('authToken', authToken['token'], {expires: new Date(exp * 1000)})
+            cookies.set('authToken', authToken['token'], {expires: new Date(exp * 1000), secure: true, sameSite: "strict"})
         } else {
             cookies.set('authToken', authToken['token'])
         }
