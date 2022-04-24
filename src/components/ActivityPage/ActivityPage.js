@@ -69,7 +69,7 @@ export const ActivityPage = () => {
             {showSpinner && (
                 <Spinner />
             )}
-            {(!showSpinner && !showDanger && activitiesData.size !== 0 && teamData !== {}) && (
+            {(!showSpinner && !showDanger && teamData !== {}) && (
                 <>
                     <div className={activityPageClasses}>
                         <div>
@@ -85,8 +85,9 @@ export const ActivityPage = () => {
                                     </button>
                                 )}
                             </div>
-
-                            <ActivitiesList activities={activitiesData} handleActivityDescriptionOpen={handleActivityDescriptionOpen} />
+                            {activitiesData.size !== 0 && (
+                                <ActivitiesList activities={activitiesData} handleActivityDescriptionOpen={handleActivityDescriptionOpen} />
+                            )}
                         </div>
                         {activityDescriptionData["show"] && (
                             <ActivityDescription activity={activityDescriptionData["activity"]} />

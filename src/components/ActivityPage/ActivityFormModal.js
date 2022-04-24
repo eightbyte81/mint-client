@@ -138,7 +138,7 @@ export const ActivityFormModal = ({teamMembers, handleModalButtons}) => {
                                             onChange={e => handleCheck(e, member["id"])}
                                             className="h-10 w-4 cursor-pointer text-indigo-600 focus:ring-teal-500 border-gray-300"
                                         />
-                                        <img className="rounded-full ml-3 w-10 h-10" src="https://i1.sndcdn.com/artworks-000550908456-f1jqua-t500x500.jpg" alt="avatar" />
+                                        <img className="rounded-full bg-white ml-3 w-10 h-10" src={member["photoUrl"]} alt="" />
                                         <div className="m-2 ml-3">
                                             {member["name"]} {member["lastname"]}
                                         </div>
