@@ -59,6 +59,29 @@ async function addUserToTeam(userToTeamForm) {
     return [returnData, errorMessage]
 }
 
+async function removeUserFromTeam(userToTeamForm) {
+    let returnData = null
+    let errorMessage = null
+    const cookies = new Cookies()
+
+    try {
+        let res = await axios({
+            url: `${requestUrl}/remove-user-from-team`,
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${cookies.get('authToken')}`
+            },
+            data: userToTeamForm
+        })
+
+        returnData = res.data
+    } catch (error) {
+        errorMessage = error
+    }
+
+    return [returnData, errorMessage]
+}
+
 async function updateTeam(team) {
     let returnData = null
     let errorMessage = null
@@ -86,4 +109,4 @@ async function deleteTeam(id) {
     return deleteById(requestUrl, id)
 }
 
-export {getAllTeams, getTeamById, addTeam, addUserToTeam, updateTeam, deleteTeam}
+export {getAllTeams, getTeamById, addTeam, addUserToTeam, removeUserFromTeam, updateTeam, deleteTeam}
