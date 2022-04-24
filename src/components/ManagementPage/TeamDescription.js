@@ -1,6 +1,7 @@
 import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../context/AuthContext";
 import {UserToTeamFormModal} from "./UserToTeamFormModal";
+import defaultAvatar from "../../assets/defaultAvatar.png";
 
 export const TeamDescription = ({team, users}) => {
     const {roleArray} = useContext(AuthContext)
@@ -48,7 +49,10 @@ export const TeamDescription = ({team, users}) => {
                                         key={member["id"]}
                                         className="flex justify-between items-center my-2 px-2 border rounded-md">
                                         <div className="flex justify-start items-center">
-                                            <img className="rounded-full bg-white ml-3 w-10 h-10" src={member["photoUrl"]} alt="" />
+                                            <img
+                                                className="rounded-full bg-white ml-3 w-10 h-10"
+                                                src={member["photoUrl"] ? member["photoUrl"] : defaultAvatar}
+                                                alt="" />
                                             <div className="m-2 ml-3">
                                                 {member["name"]} {member["lastname"]}
                                                 <div className="text-gray-400">

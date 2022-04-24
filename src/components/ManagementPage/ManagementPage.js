@@ -7,6 +7,7 @@ import {UserDescription} from "./UserDescription";
 import {TeamDescription} from "./TeamDescription";
 import {TeamFormModal} from "./TeamFormModal";
 import {AuthContext} from "../../context/AuthContext";
+import defaultAvatar from "../../assets/defaultAvatar.png";
 
 export const ManagementPage = () => {
     const {roleArray} = useContext(AuthContext)
@@ -85,7 +86,11 @@ export const ManagementPage = () => {
                                             onClick={_ => handleDescriptionOpen(true, "user", user)}
                                             className="flex justify-start my-2 p-2 w-full border rounded-md"
                                         >
-                                            <img className="rounded-full bg-white ml-3 w-10 h-10" src={user["photoUrl"]} alt="" />
+                                            <img
+                                                className="rounded-full bg-white ml-3 w-10 h-10"
+                                                src={user["photoUrl"] ? user["photoUrl"] : defaultAvatar}
+                                                alt=""
+                                            />
                                             <li className="m-2 ml-3">
                                                 {user["name"]} {user["lastname"]}
                                             </li>

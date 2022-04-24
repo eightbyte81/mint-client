@@ -31,7 +31,7 @@ export const ActivityAnalytics = ({teamMembers}) => {
     }, [teamMembers])
 
     const countUserActivities = (approved = false, monthly = false) => {
-        if (activitiesData.size === 0) return null
+        if (activitiesData.size === 0) return 0
         const userActivities = new Set()
 
         activitiesData.forEach(activity => {
@@ -61,7 +61,7 @@ export const ActivityAnalytics = ({teamMembers}) => {
     }
 
     const countTeamApprovedActivities = (monthly = false) => {
-        if (activitiesData.size === 0) return null
+        if (activitiesData.size === 0) return 0
         let approvedCountValue = 0
         const monthAgoValue = new Date()
         monthAgoValue.setMonth(monthAgoValue.getMonth() - 1)
@@ -88,7 +88,7 @@ export const ActivityAnalytics = ({teamMembers}) => {
             {showSpinner && (
                 <Spinner />
             )}
-            {(!showSpinner && !showDanger && activitiesData.size !== 0) && (
+            {(!showSpinner && !showDanger) && (
                 <>
                     <div className="flex flex-col justify-between p-10">
                         <div className="p-5">

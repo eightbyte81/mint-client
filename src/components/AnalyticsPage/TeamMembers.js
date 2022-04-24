@@ -23,7 +23,7 @@ export const TeamMembers = ({teamMembers}) => {
                                     <a href="/" aria-label="Author" title="Author" className="mr-3">
                                         <img
                                             src={member["photoUrl"] ? member["photoUrl"] : defaultAvatar}
-                                            alt="avatar"
+                                            alt=""
                                             className="object-cover w-10 h-10 rounded-full shadow-sm"
                                         />
                                     </a>

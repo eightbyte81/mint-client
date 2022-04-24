@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {updateActivityStatus} from "../../api/service/activityService";
 import {DangerAlert} from "../alerts/DangerAlert";
 import {Spinner} from "../spinner/Spinner";
+import defaultAvatar from "../../assets/defaultAvatar.png";
 
 export const ActivityDescription = ({activity}) => {
     const [showDanger, setShowDanger] = useState(false)
@@ -82,7 +83,11 @@ export const ActivityDescription = ({activity}) => {
                             <ul className="flex flex-col max-w-fit">
                                 <li className="inline-flex pb-1.5">
                                     <button className="inline-flex border-2 border-white p-1 hover:border-gray-50 active:border-gray-50">
-                                        <img className="rounded-full w-10 h-10" src="https://i1.sndcdn.com/artworks-000550908456-f1jqua-t500x500.jpg" alt="avatar" />
+                                        <img
+                                            className="rounded-full w-10 h-10"
+                                            src={activity["user"]["photoUrl"] ? activity["user"]["photoUrl"] : defaultAvatar}
+                                            alt=""
+                                        />
                                         <div className="m-2 ml-3">
                                             {activity["user"]["name"]} {activity["user"]["lastname"]}
                                         </div>
