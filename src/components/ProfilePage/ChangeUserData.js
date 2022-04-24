@@ -17,7 +17,6 @@ export const ChangeUserData = ({userData}) => {
 
         userData["name"] = name.current.trim()
         userData["lastname"] = lastname.current.trim()
-        delete userData["password"]
 
         const [, errorMessage] = await updateUser(userData)
         if (errorMessage) {

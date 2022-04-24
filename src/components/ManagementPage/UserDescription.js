@@ -1,7 +1,6 @@
 import {useRef} from "react";
 
 export const UserDescription = ({user}) => {
-    // TODO: Fix user password re-hash (delete user["password"] just like in profile page)
     const username = useRef("")
     const password = useRef("")
 
