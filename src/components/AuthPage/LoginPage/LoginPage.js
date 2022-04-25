@@ -1,6 +1,6 @@
 import {login} from "../../../api/service/authService";
 import {useRef, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {DangerAlert} from "../../alerts/DangerAlert";
 import {Spinner} from "../../spinner/Spinner";
 
@@ -97,12 +97,6 @@ export const LoginPage = () => {
                             <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                                 Запомнить меня
                             </label>
-                        </div>
-
-                        <div className="text-sm">
-                            <Link to="/forgot-password" className="font-medium text-teal-600 hover:text-teal-500">
-                                Забыли пароль?
-                            </Link>
                         </div>
                     </div>
 

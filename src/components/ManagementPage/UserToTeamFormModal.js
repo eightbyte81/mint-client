@@ -1,8 +1,9 @@
 import {DangerAlert} from "../alerts/DangerAlert";
 import {Spinner} from "../spinner/Spinner";
 import {useEffect, useState} from "react";
+import {addUserToTeam} from "../../api/service/teamService";
 
-export const UserToTeamFormModal = ({usersData, handleModalButtons}) => {
+export const UserToTeamFormModal = ({usersData, team, handleModalButtons}) => {
     const [users, setUsers] = useState([])
     const [showDanger, setShowDanger] = useState(false)
     const [showSpinner, setShowSpinner] = useState(false)
@@ -49,7 +50,7 @@ export const UserToTeamFormModal = ({usersData, handleModalButtons}) => {
             return
         }
 
-        // TODO: Add user to team
+        await addUserToTeam({"userId": checkedUser["id"], "teamId": team["id"]})
 
         setShowSpinner(false)
         handleModalButtons(false)
@@ -87,12 +88,12 @@ export const UserToTeamFormModal = ({usersData, handleModalButtons}) => {
                             {users.length !== 0 && users.map(member => (
                                 <li
                                     key={member["id"]}
-                                    className="flex justify-start text-white my-2 p-2 border rounded-md">
+                                    className="flex justify-start items-center text-white my-2 p-2 border rounded-md">
                                     <input
                                         type="checkbox"
                                         checked={member["checked"]}
                                         onChange={e => handleCheck(e, member["id"])}
-                                        className="h-10 w-4 cursor-pointer text-indigo-600 focus:ring-teal-500 border-gray-300"
+                                        className="h-4 w-4 cursor-pointer text-indigo-600 focus:ring-teal-500 border-gray-300"
                                     />
                                     <img className="rounded-full bg-white ml-3 w-10 h-10" src={member["photoUrl"]} alt="" />
                                     <div className="m-2 ml-3">
