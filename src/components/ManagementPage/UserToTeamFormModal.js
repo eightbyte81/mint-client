@@ -49,6 +49,8 @@ export const UserToTeamFormModal = ({usersData, handleModalButtons}) => {
             return
         }
 
+        // TODO: Add user to team
+
         setShowSpinner(false)
         handleModalButtons(false)
         window.location.reload()
