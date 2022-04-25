@@ -162,35 +162,37 @@ export const UserDescription = ({user}) => {
                             />
                         </div>
                     </div>
-                    <div className="m-3 font-medium text-gray-800">
-                        <div className="text-gray-400">Роли</div>
-                        <ul className="overflow-y-auto max-h-56 text-sm space-y-2 text-left">
-                            <li
-                                className="flex justify-start items-center my-2 p-2 border rounded-md">
-                                <input
-                                    type="checkbox"
-                                    checked={Boolean(adminCheck)}
-                                    onChange={e => handleCheck("ADMIN", e)}
-                                    className="h-4 w-4 cursor-pointer text-indigo-600 focus:ring-teal-500 border-gray-300"
-                                />
-                                <div className="m-2 ml-3">
-                                    Администратор
-                                </div>
-                            </li>
-                            <li
-                                className="flex justify-start items-center my-2 p-2 border rounded-md">
-                                <input
-                                    type="checkbox"
-                                    checked={Boolean(leadCheck)}
-                                    onChange={e => handleCheck("LEAD", e)}
-                                    className="h-4 w-4 cursor-pointer text-indigo-600 focus:ring-teal-500 border-gray-300"
-                                />
-                                <div className="m-2 ml-3">
-                                    Глава команды
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                    {roleArray.includes("ROLE_ADMIN") && (
+                        <div className="m-3 font-medium text-gray-800">
+                            <div className="text-gray-400">Роли</div>
+                            <ul className="overflow-y-auto max-h-56 text-sm space-y-2 text-left">
+                                <li
+                                    className="flex justify-start items-center my-2 p-2 border rounded-md">
+                                    <input
+                                        type="checkbox"
+                                        checked={Boolean(adminCheck)}
+                                        onChange={e => handleCheck("ADMIN", e)}
+                                        className="h-4 w-4 cursor-pointer text-indigo-600 focus:ring-teal-500 border-gray-300"
+                                    />
+                                    <div className="m-2 ml-3">
+                                        Администратор
+                                    </div>
+                                </li>
+                                <li
+                                    className="flex justify-start items-center my-2 p-2 border rounded-md">
+                                    <input
+                                        type="checkbox"
+                                        checked={Boolean(leadCheck)}
+                                        onChange={e => handleCheck("LEAD", e)}
+                                        className="h-4 w-4 cursor-pointer text-indigo-600 focus:ring-teal-500 border-gray-300"
+                                    />
+                                    <div className="m-2 ml-3">
+                                        Глава команды
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    )}
                 </div>
                 <div className="py-3 px-6 border-t border-gray-300 text-gray-600">
                     <button
