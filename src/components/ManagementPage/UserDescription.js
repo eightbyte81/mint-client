@@ -86,9 +86,7 @@ export const UserDescription = ({user}) => {
         if (newUsername.current.trim() !== "" && username !== newUsername.current.trim()) {
             const cookie = new Cookies()
             cookie.remove("authToken")
-            setShowSpinner(false)
             navigate("/", {replace: true})
-            window.location.reload()
         }
 
         newUsername.current = ""
@@ -109,6 +107,12 @@ export const UserDescription = ({user}) => {
             setShowDanger(true)
 
             return
+        }
+
+        if (username === user["username"]) {
+            const cookie = new Cookies()
+            cookie.remove("authToken")
+            navigate("/", {replace: true})
         }
 
         setShowSpinner(false)

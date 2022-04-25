@@ -1,10 +1,12 @@
-import React, {useState} from "react";
-import {updateActivityStatus} from "../../api/service/activityService";
+import React, {useContext, useState} from "react";
+import {deleteActivity, updateActivityStatus} from "../../api/service/activityService";
 import {DangerAlert} from "../alerts/DangerAlert";
 import {Spinner} from "../spinner/Spinner";
 import defaultAvatar from "../../assets/defaultAvatar.png";
+import {AuthContext} from "../../context/AuthContext";
 
 export const ActivityDescription = ({activity}) => {
+    const {roleArray} = useContext(AuthContext)
     const [showDanger, setShowDanger] = useState(false)
     const [showSpinner, setShowSpinner] = useState(false)
     const [errorMsg, setErrorMsg] = useState(null)
@@ -38,6 +40,23 @@ export const ActivityDescription = ({activity}) => {
         return `${Math.floor(lifetime / 86400000)} дней назад`
     }
 
+    const handleDelete = async () => {
+        setShowSpinner(true)
+
+        const [, errorMessage] = await deleteActivity(activity["id"])
+
+        if (errorMessage) {
+            setErrorMsg(errorMessage)
+            setShowSpinner(false)
+            setShowDanger(true)
+
+            return
+        }
+
+        setShowSpinner(false)
+        window.location.reload()
+    }
+
     return (
         <div className="flex justify-center">
             <div className="block rounded-lg shadow-lg bg-white w-full text-center">
@@ -67,6 +86,14 @@ export const ActivityDescription = ({activity}) => {
                                 disabled
                                 className="inline-block px-6 py-2.5 bg-teal-accent-400 text-white font-medium text-xs leading-tight uppercase rounded shadow-lg focus:bg-teal-accent-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-teal-accent-800 active:shadow-lg transition duration-150 ease-in-out">
                             Подтверждено
+                        </button>
+                    )}
+                    {(roleArray.includes("ROLE_LEAD") || roleArray.includes("ROLE_ADMIN")) && (
+                        <button
+                            type="button"
+                            onClick={handleDelete}
+                            className="mx-2 inline-block px-6 py-2.5 bg-red-400 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">
+                            Удалить задачу
                         </button>
                     )}
                     {showDanger && (
