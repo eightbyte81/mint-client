@@ -206,10 +206,11 @@ export const NavBar = () => {
                                             </>
                                         )}
                                         {!authValue && (
-                                            <ul className="flex items-center hidden space-x-8 lg:flex">
+                                            <ul className="flex items-center space-x-8 lg:flex">
                                                 <li>
                                                     <Link
                                                         to="/login"
+                                                        onClick={() => setIsMenuOpen(false)}
                                                         aria-label="Вход в систему"
                                                         title="Вход в систему"
                                                         className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-teal-accent-400"
@@ -220,6 +221,7 @@ export const NavBar = () => {
                                                 <li>
                                                     <Link
                                                         to="/register"
+                                                        onClick={() => setIsMenuOpen(false)}
                                                         className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-accent-400 hover:bg-teal-accent-700 focus:shadow-outline focus:outline-none"
                                                         aria-label="Регистрация"
                                                         title="Регистрация"

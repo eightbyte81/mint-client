@@ -129,11 +129,6 @@ export const TeamDescription = ({team, users}) => {
                     </div>
                 </div>
                 <div className="py-3 px-6 border-t border-gray-300 text-gray-600">
-                    {/*<button type="button"*/}
-                    {/*        className="mx-2 inline-block px-6 py-2.5 bg-teal-accent-400 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-teal-accent-700 hover:shadow-lg focus:bg-teal-accent-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-teal-accent-800 active:shadow-lg transition duration-150 ease-in-out">*/}
-                    {/*    Сохранить изменения*/}
-                    {/*</button>*/}
-                    {/*{roleArray.includes("ROLE_ADMIN") && ()}*/}
                     {roleArray.includes("ROLE_ADMIN") && (
                         <>
                             <button
