@@ -1,9 +1,9 @@
 import {useEffect, useRef, useState} from "react";
 import {Spinner} from "../spinner/Spinner";
 import {DangerAlert} from "../alerts/DangerAlert";
-import {addActivityToUser, createActivity} from "../../api/service/activityService";
+import {addActivityToUser, addChildActivity, createActivity} from "../../api/service/activityService";
 
-export const ActivityFormModal = ({teamMembers, handleModalButtons}) => {
+export const ActivityFormModal = ({teamMembers, handleModalButtons, parentId = null}) => {
     const name = useRef("")
     const description = useRef("")
     const [showSpinner, setShowSpinner] = useState(false)
@@ -48,7 +48,7 @@ export const ActivityFormModal = ({teamMembers, handleModalButtons}) => {
             "description": description.current.trim()
         }
 
-        const [returnActivity, creationErrorMessage] = await createActivity(activity)
+        const [returnActivity, creationErrorMessage] = (parentId === null) ? await createActivity(activity) : await addChildActivity(activity, parentId)
 
         if (creationErrorMessage) {
             setErrorMsg(creationErrorMessage)
@@ -90,7 +90,7 @@ export const ActivityFormModal = ({teamMembers, handleModalButtons}) => {
                 <form className="relative rounded-lg shadow bg-zinc-600" onSubmit={handleSubmit} method="POST">
                     <div className="flex justify-between items-start p-5 rounded-t">
                         <h3 className="text-xl font-semibold text-deep-purple-50 lg:text-2xl">
-                            Добавление задачи
+                            Добавление {parentId !== null ? "дочерней" : ""} задачи
                         </h3>
                         <button type="button"
                                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"

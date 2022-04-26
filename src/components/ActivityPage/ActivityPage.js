@@ -90,7 +90,7 @@ export const ActivityPage = () => {
                             )}
                         </div>
                         {activityDescriptionData["show"] && (
-                            <ActivityDescription activity={activityDescriptionData["activity"]} />
+                            <ActivityDescription activity={activityDescriptionData["activity"]} members={teamData["members"]} />
                         )}
                     </div>
                     {activityFormModal && (
