@@ -34,7 +34,6 @@ function App() {
     return (
     <div className="App">
         <AuthContext.Provider value={{authValue, username, roleArray}}>
-            {/*<ApiTest />*/}
             <NavBar />
             <Routes>
                 <Route path="/" element={<MainPage />} />
