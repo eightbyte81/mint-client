@@ -6,7 +6,6 @@ import {Routes, Route} from "react-router-dom"
 import {MainPage} from "./components/MainPage/MainPage"
 import {AuthContext} from "./context/AuthContext"
 import Cookies from "universal-cookie"
-// import ApiTest from "./api/ApiTest";
 import {ActivityPage} from "./components/ActivityPage/ActivityPage";
 import {AnalyticsPage} from "./components/AnalyticsPage/AnalyticsPage";
 import {ProfilePage} from "./components/ProfilePage/ProfilePage";
