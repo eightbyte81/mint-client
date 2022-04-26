@@ -2,6 +2,7 @@ import {DangerAlert} from "../alerts/DangerAlert";
 import {Spinner} from "../spinner/Spinner";
 import {useEffect, useState} from "react";
 import {addUserToTeam} from "../../api/service/teamService";
+import defaultAvatar from "../../assets/defaultAvatar.png";
 
 export const UserToTeamFormModal = ({usersData, team, handleModalButtons}) => {
     const [users, setUsers] = useState([])
@@ -95,7 +96,11 @@ export const UserToTeamFormModal = ({usersData, team, handleModalButtons}) => {
                                         onChange={e => handleCheck(e, member["id"])}
                                         className="h-4 w-4 cursor-pointer text-indigo-600 focus:ring-teal-500 border-gray-300"
                                     />
-                                    <img className="rounded-full bg-white ml-3 w-10 h-10" src={member["photoUrl"]} alt="" />
+                                    <img
+                                        className="rounded-full bg-white ml-3 w-10 h-10"
+                                        src={member["photoUrl"] ? member["photoUrl"] : defaultAvatar}
+                                        alt=""
+                                    />
                                     <div className="m-2 ml-3">
                                         {member["name"]} {member["lastname"]}
                                     </div>
